@@ -16,6 +16,8 @@ public class MemberController {
 
     private final MemberService memberService;
 
+    // todo [gotoend] 조회 API 기능 추가
+
     @PostMapping
     public ResponseEntity<Object> join(@RequestBody MemberJoinDto memberJoinDto) {
         return ResponseEntity.ok(memberService.joinMember(memberJoinDto));

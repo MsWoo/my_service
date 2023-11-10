@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 
     private final CustomDetailsSerivce customDetailsSerivce;
-
     @Override
     public Authentication authenticate(Authentication authentication)
             throws AuthenticationException {

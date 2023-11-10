@@ -24,8 +24,8 @@ spring:
     show-sql: true
 
 jwt:
-  secret-key: local_my_service_secret_key_qweqweqweqweqweqweqweqweqweqwe
-  expiration-time: 3600000 # 1??: 1 * 60 * 60 * 1000 = 3600000
-  refresh-expiration-time: 10800000 # 3??: 3 * 60 * 60 * 1000 = 3600000
+  secret-key: U9f4wG5wrk1cOhtBh0T2l4BRY8B0/j6H7vRvXmvqMhOcUQstYjAb648Nkr2dDMFn
+  expiration-time: 3600000 # 1시간: 1 * 60 * 60 * 1000 = 3600000
+  refresh-expiration-time: 10800000 # 3시간: 3 * 60 * 60 * 1000 = 3600000
 
 ---
