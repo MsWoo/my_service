@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import mswoo.toyproject.my_service.domain.dto.MemberJoinDto;
 import mswoo.toyproject.my_service.domain.entity.Member;
 import mswoo.toyproject.my_service.repository.MemberRepository;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

@@ -1,14 +1,14 @@
 package mswoo.toyproject.my_service.controller;
 
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import mswoo.toyproject.my_service.domain.dto.LoginDto;
+import mswoo.toyproject.my_service.domain.dto.SuccessResponse;
 import mswoo.toyproject.my_service.service.LoginService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -20,7 +20,14 @@ public class LoginController {
 
     @PostMapping
     public ResponseEntity login(@RequestBody LoginDto loginDto) {
-        return ResponseEntity.ok(loginService.login(loginDto));
+        return ResponseEntity.ok(
+                SuccessResponse.builder()
+                        .result(true)
+                        .status(HttpServletResponse.SC_OK)
+                        .data(loginService.login(loginDto))
+                        .message("Success")
+                        .build()
+        );
     }
 
 }

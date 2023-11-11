@@ -3,7 +3,6 @@ package mswoo.toyproject.my_service.service;
 import io.micrometer.common.util.StringUtils;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import mswoo.toyproject.my_service.config.jwt.CustomDetailsSerivce;
 import mswoo.toyproject.my_service.domain.entity.Member;
@@ -13,7 +12,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -47,7 +45,7 @@ public class CustomUserDetailsService implements CustomDetailsSerivce {
         grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_USER"));
 
         User user = new User(
-                member.getUserName(),
+                member.getUserId(),
                 "",
                 grantedAuthorities
         );
