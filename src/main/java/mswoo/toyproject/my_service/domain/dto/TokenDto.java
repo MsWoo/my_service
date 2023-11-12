@@ -6,6 +6,7 @@ import lombok.Getter;
 @Builder
 @Getter
 public class TokenDto {
+    private String userId;
     private String accessToken;
     private String refreshToken;
 }

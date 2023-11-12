@@ -5,6 +5,7 @@ import mswoo.toyproject.my_service.config.jwt.JwtAccessDeniedHandler;
 import mswoo.toyproject.my_service.config.jwt.JwtAuthenticationEntryPoint;
 import mswoo.toyproject.my_service.config.jwt.JwtFilter;
 import mswoo.toyproject.my_service.config.jwt.TokenProvider;
+import mswoo.toyproject.my_service.service.TokenInfoService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -21,6 +22,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class WebSecurityConfig {
 
     private final TokenProvider tokenProvider;
+    private final TokenInfoService tokenInfoService;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -33,10 +35,9 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(
                         authorize -> authorize
                                 .requestMatchers("/api/v1/login/**").permitAll()
-                                .requestMatchers("/api/v1/member/**").permitAll()
                                 .anyRequest().authenticated()
                 )
-                .addFilterBefore(new JwtFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JwtFilter(tokenProvider, tokenInfoService), UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling(
                         exception -> exception
                                 .accessDeniedHandler(new JwtAccessDeniedHandler())

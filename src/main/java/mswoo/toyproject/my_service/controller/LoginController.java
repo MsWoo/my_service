@@ -19,12 +19,12 @@ public class LoginController {
     private final LoginService loginService;
 
     @PostMapping
-    public ResponseEntity login(@RequestBody LoginDto loginDto) {
+    public ResponseEntity login(@RequestBody LoginDto loginDto, HttpServletResponse response) {
         return ResponseEntity.ok(
                 SuccessResponse.builder()
                         .result(true)
-                        .status(HttpServletResponse.SC_OK)
-                        .data(loginService.login(loginDto))
+                        .code(String.valueOf(HttpServletResponse.SC_OK))
+                        .data(loginService.login(loginDto, response))
                         .message("Success")
                         .build()
         );

@@ -57,6 +57,8 @@ public class TokenProvider {
                 .compact();
 
         String refreshToken = Jwts.builder()
+                .setSubject(authentication.getName())
+                .claim("role", authorities)
                 .signWith(this.secretKey, SignatureAlgorithm.HS512)
                 .setExpiration(new Date(now.getTime() + Long.parseLong(this.refreshExpirationTime)))
                 .compact();
@@ -67,28 +69,50 @@ public class TokenProvider {
                 .build();
     }
 
-    public String resolveToken(HttpServletRequest request) {
-        String bearerToken = request.getHeader("Authorization");
-        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
-            return bearerToken.substring(7);
-        }
-        return null;
+    public TokenDto reissueToken(String token) {
+        Date now = new Date();
+        Claims claims = this.getClaims(token);
+
+        String accessToken = Jwts.builder()
+                .setSubject(claims.getSubject())
+                .claim("role", claims.get("role"))
+                .signWith(this.secretKey, SignatureAlgorithm.HS512)
+                .setExpiration(new Date(now.getTime() + Long.parseLong(this.expirationTime)))
+                .compact();
+
+        String refreshToken = Jwts.builder()
+                .setSubject(claims.getSubject())
+                .claim("role", claims.get("role"))
+                .signWith(this.secretKey, SignatureAlgorithm.HS512)
+                .setExpiration(new Date(now.getTime() + Long.parseLong(this.refreshExpirationTime)))
+                .compact();
+
+        return TokenDto.builder()
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
+                .build();
     }
 
-    public boolean validateToken(String token) {
+    public boolean validateToken(String token) throws ExpiredJwtException {
         try {
             Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token);
             return true;
         } catch (SecurityException | MalformedJwtException e) {
             log.info("Invalid JWT signature.");
-        } catch (ExpiredJwtException e) {
-            log.info("Expired JWT token.");
         } catch (UnsupportedJwtException e) {
             log.info("JWT token not supported.");
         } catch (IllegalArgumentException e) {
             log.info("JWT token is invalid");
         }
         return false;
+    }
+
+    public String resolveToken(HttpServletRequest request) {
+        String bearerToken = request.getHeader("Authorization");
+        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
+            return bearerToken.substring(7);
+        }
+        return null;
     }
 
     public Authentication getAuthentication(String token) {
@@ -106,6 +130,14 @@ public class TokenProvider {
         User principal = new User(claims.getSubject(), "", authorities);
 
         return new UsernamePasswordAuthenticationToken(principal, token, authorities);
+    }
+
+    public Claims getClaims(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(this.secretKey)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
     }
 
 }
