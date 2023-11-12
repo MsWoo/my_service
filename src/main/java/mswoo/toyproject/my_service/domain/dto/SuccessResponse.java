@@ -7,7 +7,7 @@ import lombok.Data;
 @Builder
 public class SuccessResponse<T> {
     private boolean result;
-    private Integer status;
+    private String code;
     private String message;
     private T data;
 }
