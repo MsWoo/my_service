@@ -1,9 +1,12 @@
 package mswoo.toyproject.my_service.controller;
 
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import mswoo.toyproject.my_service.domain.dto.MemberJoinDto;
+import mswoo.toyproject.my_service.domain.dto.SuccessResponse;
 import mswoo.toyproject.my_service.service.MemberService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,11 +19,26 @@ public class MemberController {
 
     private final MemberService memberService;
 
-    // todo [gotoend] 조회 API 기능 추가
+    @GetMapping("/search")
+    public ResponseEntity<Object> searchMember() {
+        return ResponseEntity.ok(
+                SuccessResponse.builder()
+                        .result(true)
+                        .code(String.valueOf(HttpServletResponse.SC_OK))
+                        .data(memberService.searchMember())
+                        .message("Success")
+                        .build());
+    }
 
     @PostMapping
-    public ResponseEntity<Object> join(@RequestBody MemberJoinDto memberJoinDto) {
-        return ResponseEntity.ok(memberService.joinMember(memberJoinDto));
+    public ResponseEntity<Object> joinMember(@RequestBody MemberJoinDto memberJoinDto) {
+        return ResponseEntity.ok(
+                SuccessResponse.builder()
+                        .result(true)
+                        .code(String.valueOf(HttpServletResponse.SC_OK))
+                        .data(memberService.joinMember(memberJoinDto))
+                        .message("Success")
+                        .build());
     }
 
 }
