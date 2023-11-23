@@ -1,8 +1,8 @@
 package mswoo.toyproject.my_service.config;
 
 import lombok.RequiredArgsConstructor;
-import mswoo.toyproject.my_service.config.jwt.JwtAccessDeniedHandler;
-import mswoo.toyproject.my_service.config.jwt.JwtAuthenticationEntryPoint;
+import mswoo.toyproject.my_service.config.jwt.CustomAccessDeniedHandler;
+import mswoo.toyproject.my_service.config.jwt.CustomAuthenticationEntryPoint;
 import mswoo.toyproject.my_service.config.jwt.JwtFilter;
 import mswoo.toyproject.my_service.config.jwt.TokenProvider;
 import mswoo.toyproject.my_service.service.TokenInfoService;
@@ -40,8 +40,8 @@ public class WebSecurityConfig {
                 .addFilterBefore(new JwtFilter(tokenProvider, tokenInfoService), UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling(
                         exception -> exception
-                                .accessDeniedHandler(new JwtAccessDeniedHandler())
-                                .authenticationEntryPoint(new JwtAuthenticationEntryPoint())
+                                .accessDeniedHandler(new CustomAccessDeniedHandler())
+                                .authenticationEntryPoint(new CustomAuthenticationEntryPoint())
                 )
                 .build();
     }
