@@ -28,7 +28,7 @@ public class MemberService {
     }
 
     @Transactional
-    public Long joinMember(MemberJoinDto memberJoinDto) {
+    public MemberDto joinMember(MemberJoinDto memberJoinDto) {
         if (memberRepository.existsByUserId(memberJoinDto.getUserId())) {
             throw new ResponseStatusException(HttpStatus.OK, ErrorCode.DUPLICATE_ID.name());
         }
@@ -37,10 +37,11 @@ public class MemberService {
                 .userId(memberJoinDto.getUserId())
                 .userName(memberJoinDto.getUserName())
                 .password(passwordEncoder.encode(memberJoinDto.getPassword()))
+                .phoneNumber(memberJoinDto.getPhoneNumber())
                 .build();
 
         Long id = memberRepository.save(member).getId();
 
-        return id;
+        return MemberDto.builder().id(id).build();
     }
 }

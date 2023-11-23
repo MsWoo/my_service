@@ -1,11 +1,13 @@
 package mswoo.toyproject.my_service.domain.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
 import lombok.Data;
 import mswoo.toyproject.my_service.domain.entity.Member;
 
 @Data
 @Builder
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class MemberDto {
     private Long id;
     private String userId;

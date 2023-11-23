@@ -7,4 +7,5 @@ public class MemberJoinDto {
     private String userId;
     private String userName;
     private String password;
+    private String phoneNumber;
 }
