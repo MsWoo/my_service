@@ -16,8 +16,8 @@ public class TokenInfoService {
     private final TokenRepository tokenRepository;
 
 
-    public TokenDto getTokenInfoByUserId(String userId) {
-        TokenInfo tokenInfo = tokenRepository.findById(userId)
+    public TokenDto getTokenInfoById(String accessToken) {
+        TokenInfo tokenInfo = tokenRepository.findById(accessToken)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.OK, ErrorCode.EMPTY_DATA.name()));
 
         return TokenDto.builder()
@@ -26,22 +26,13 @@ public class TokenInfoService {
                 .build();
     }
 
-    public TokenDto getTokenInfoByAccessToken(String accessToken) {
-        TokenInfo tokenInfo = tokenRepository.findByAccessToken(accessToken)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.OK, ErrorCode.EMPTY_DATA.name()));
-
-        return TokenDto.builder()
-                .accessToken(tokenInfo.getAccessToken())
-                .refreshToken(tokenInfo.getRefreshToken())
-                .build();
-    }
 
     public void saveTokenInfo(TokenInfo tokenInfo) {
         tokenRepository.save(tokenInfo);
     }
 
-    public void deleteTokenInfoByUserId(String userId) {
-        tokenRepository.deleteById(userId);
+    public void deleteTokenInfoById(String accessToken) {
+        tokenRepository.deleteById(accessToken);
     }
 
 }

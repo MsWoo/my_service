@@ -26,15 +26,12 @@ public class LoginService {
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        tokenInfoService.deleteTokenInfoByUserId(loginDto.getUserId());
-
         TokenDto tokenDto = tokenProvider.generateToken(authentication);
 
         CookieUtil.generateCookie(response, "accessToken", tokenDto.getAccessToken());
 
         tokenInfoService.saveTokenInfo(
                 TokenInfo.builder()
-                        .userId(loginDto.getUserId())
                         .accessToken(tokenDto.getAccessToken())
                         .refreshToken(tokenDto.getRefreshToken())
                         .build()

@@ -3,31 +3,32 @@ package mswoo.toyproject.my_service.config.jwt;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.ServletRequest;
-import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import mswoo.toyproject.my_service.domain.dto.TokenDto;
+import mswoo.toyproject.my_service.domain.entity.TokenInfo;
 import mswoo.toyproject.my_service.service.TokenInfoService;
 import mswoo.toyproject.my_service.util.CookieUtil;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
-import org.springframework.web.filter.GenericFilterBean;
+import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.server.ResponseStatusException;
 
 @Slf4j
 @RequiredArgsConstructor
-public class JwtFilter extends GenericFilterBean {
+public class JwtFilter extends OncePerRequestFilter {
 
     private final TokenProvider tokenProvider;
     private final TokenInfoService tokenInfoService;
 
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-            throws IOException, ServletException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
+            FilterChain filterChain) throws ServletException, IOException {
 
         // 쿠키 or 헤더에서 토큰 추출
         String accessToken = CookieUtil.getAccessToken((HttpServletRequest) request);
@@ -36,13 +37,6 @@ public class JwtFilter extends GenericFilterBean {
         }
 
         // todo [gotoend] refresh로 갱신해주는 로직 수정 필요
-
-//        String userId = "";
-//        try {
-//            userId = tokenProvider.getClaims(accessToken).getSubject();
-//        } catch (ExpiredJwtException ex) {
-//            userId = ex.getClaims().getSubject();
-//        }
 
         if (StringUtils.hasText(accessToken)) {
             try {
@@ -53,35 +47,33 @@ public class JwtFilter extends GenericFilterBean {
                 }
             } catch (ExpiredJwtException accessTokenEx) {
                 log.info("Expired accessToken");
-                TokenDto tokenDto = tokenInfoService.getTokenInfoByAccessToken(accessToken);
-                String refreshToken = tokenDto.getRefreshToken();
+                try {
+                    String refreshToken = tokenInfoService.getTokenInfoById(accessToken).getRefreshToken();
 
-//                try {
-//                    if (tokenProvider.validateToken(refreshToken)) {
-//                        log.info("valid refreshToken");
-//
-//                        tokenInfoService.deleteTokenInfoByUserId(tokenDto.getUserId());
-//
-//                        TokenDto newTokenDto = tokenProvider.reissueToken(refreshToken);
-//
-//                        tokenInfoService.saveTokenInfo(
-//                                TokenInfo.builder()
-//                                        .userId(tokenDto.getUserId())
-//                                        .accessToken(newTokenDto.getAccessToken())
-//                                        .refreshToken(newTokenDto.getRefreshToken())
-//                                        .build());
-//
-//                        Authentication authentication = tokenProvider.getAuthentication(newTokenDto.getAccessToken());
-//                        SecurityContextHolder.getContext().setAuthentication(authentication);
-//
-//                        CookieUtil.generateCookie((HttpServletResponse) response, "accessToken", newTokenDto.getAccessToken());
-//                    }
-//                } catch (ExpiredJwtException refreshTokenEx) {
-//                    log.info("Expired refreshToken");
-//                }
+                    if (tokenProvider.validateToken(refreshToken)) {
+                        log.info("valid refreshToken");
+
+                        tokenInfoService.deleteTokenInfoById(accessToken);
+
+                        TokenDto tokenDto = tokenProvider.reissueToken(refreshToken);
+
+                        tokenInfoService.saveTokenInfo(
+                                TokenInfo.builder()
+                                        .accessToken(tokenDto.getAccessToken())
+                                        .refreshToken(tokenDto.getRefreshToken())
+                                        .build());
+
+                        Authentication authentication = tokenProvider.getAuthentication(tokenDto.getAccessToken());
+                        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+                        CookieUtil.generateCookie((HttpServletResponse) response, "accessToken", tokenDto.getAccessToken());
+                    }
+                } catch (ExpiredJwtException | ResponseStatusException ex) {
+                    log.info("Expired refreshToken");
+                }
             }
         }
 
-        chain.doFilter(request, response);
+        filterChain.doFilter(request, response);
     }
 }

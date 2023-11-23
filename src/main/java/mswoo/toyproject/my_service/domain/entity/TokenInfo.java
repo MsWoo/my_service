@@ -14,7 +14,6 @@ import org.springframework.data.redis.core.RedisHash;
 @NoArgsConstructor
 public class TokenInfo {
     @Id
-    private String userId;
     private String accessToken;
     private String refreshToken;
 }
