@@ -36,8 +36,6 @@ public class JwtFilter extends OncePerRequestFilter {
             accessToken = tokenProvider.resolveToken((HttpServletRequest) request);
         }
 
-        // todo [gotoend] refresh로 갱신해주는 로직 수정 필요
-
         if (StringUtils.hasText(accessToken)) {
             try {
                 if (tokenProvider.validateToken(accessToken)) {

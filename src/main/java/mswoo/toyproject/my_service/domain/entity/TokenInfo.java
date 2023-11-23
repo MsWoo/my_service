@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 
-@RedisHash(value = "tokenInfo", timeToLive = 60*60*3)
+@RedisHash(value = "tokenInfo", timeToLive = 60*60*3) // TTL : 3시간
 @Getter
 @Builder
 @AllArgsConstructor
