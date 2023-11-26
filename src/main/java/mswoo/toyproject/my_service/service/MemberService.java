@@ -3,7 +3,7 @@ package mswoo.toyproject.my_service.service;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
-import mswoo.toyproject.my_service.code.ErrorCode;
+import mswoo.toyproject.my_service.enums.ErrorCode;
 import mswoo.toyproject.my_service.domain.dto.MemberDto;
 import mswoo.toyproject.my_service.domain.dto.MemberJoinDto;
 import mswoo.toyproject.my_service.domain.entity.Member;
@@ -34,6 +34,7 @@ public class MemberService {
         }
 
         Member member = Member.builder()
+                .authorityId(1L)
                 .userId(memberJoinDto.getUserId())
                 .userName(memberJoinDto.getUserName())
                 .password(passwordEncoder.encode(memberJoinDto.getPassword()))

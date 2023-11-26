@@ -1,4 +1,4 @@
-package mswoo.toyproject.my_service.code;
+package mswoo.toyproject.my_service.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

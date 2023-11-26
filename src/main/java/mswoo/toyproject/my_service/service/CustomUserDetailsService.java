@@ -5,9 +5,12 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import mswoo.toyproject.my_service.code.ErrorCode;
+import mswoo.toyproject.my_service.domain.entity.Authority;
+import mswoo.toyproject.my_service.enums.ErrorCode;
 import mswoo.toyproject.my_service.config.jwt.CustomDetailsSerivce;
 import mswoo.toyproject.my_service.domain.entity.Member;
+import mswoo.toyproject.my_service.enums.Role;
+import mswoo.toyproject.my_service.repository.AuthorityRepository;
 import mswoo.toyproject.my_service.repository.MemberRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -26,6 +29,7 @@ public class CustomUserDetailsService implements CustomDetailsSerivce {
 
     private final PasswordEncoder passwordEncoder;
     private final MemberRepository memberRepository;
+    private final AuthorityRepository authorityRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username, String password) {
@@ -57,9 +61,11 @@ public class CustomUserDetailsService implements CustomDetailsSerivce {
         member.initLoginFail();
         memberRepository.save(member);
 
-        // 임시로 USER 권한 부여
+        Authority authority = authorityRepository.findById(member.getAuthorityId()).get();
+        Role role = Role.valueOf(authority.getAuthorityName());
+
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
-        grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+        grantedAuthorities.add(new SimpleGrantedAuthority(role.getAuthority()));
 
         User user = new User(
                 member.getUserId(),

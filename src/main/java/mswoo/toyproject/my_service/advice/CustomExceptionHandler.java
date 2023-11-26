@@ -1,7 +1,7 @@
 package mswoo.toyproject.my_service.advice;
 
 import lombok.extern.slf4j.Slf4j;
-import mswoo.toyproject.my_service.code.ErrorCode;
+import mswoo.toyproject.my_service.enums.ErrorCode;
 import mswoo.toyproject.my_service.domain.dto.ErrorResponse;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

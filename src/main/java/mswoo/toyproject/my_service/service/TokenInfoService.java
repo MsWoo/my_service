@@ -1,7 +1,7 @@
 package mswoo.toyproject.my_service.service;
 
 import lombok.RequiredArgsConstructor;
-import mswoo.toyproject.my_service.code.ErrorCode;
+import mswoo.toyproject.my_service.enums.ErrorCode;
 import mswoo.toyproject.my_service.domain.dto.TokenDto;
 import mswoo.toyproject.my_service.domain.entity.TokenInfo;
 import mswoo.toyproject.my_service.repository.TokenRepository;
