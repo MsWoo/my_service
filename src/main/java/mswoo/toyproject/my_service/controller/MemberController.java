@@ -21,24 +21,12 @@ public class MemberController {
 
     @GetMapping("/search")
     public ResponseEntity<Object> searchMember() {
-        return ResponseEntity.ok(
-                SuccessResponse.builder()
-                        .result(true)
-                        .code(String.valueOf(HttpServletResponse.SC_OK))
-                        .data(memberService.searchMember())
-                        .message("Success")
-                        .build());
+        return ResponseEntity.ok(memberService.searchMember());
     }
 
     @PostMapping
     public ResponseEntity<Object> joinMember(@RequestBody MemberJoinDto memberJoinDto) {
-        return ResponseEntity.ok(
-                SuccessResponse.builder()
-                        .result(true)
-                        .code(String.valueOf(HttpServletResponse.SC_OK))
-                        .data(memberService.joinMember(memberJoinDto))
-                        .message("Success")
-                        .build());
+        return ResponseEntity.ok(memberService.joinMember(memberJoinDto));
     }
 
 }
