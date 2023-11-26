@@ -1,9 +1,11 @@
 package mswoo.toyproject.my_service.config.jwt;
 
+import com.google.gson.Gson;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import mswoo.toyproject.my_service.domain.dto.ErrorResponse;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -19,10 +21,12 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
         response.setContentType("application/json;charset=UTF-8");
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         if (authException instanceof UsernameNotFoundException || authException instanceof BadCredentialsException) {
-            response.getWriter().write(authException.getMessage());
+            response.getWriter().write(
+                    new Gson().toJson(new ErrorResponse(String.valueOf(HttpServletResponse.SC_BAD_REQUEST), authException.getMessage())));
         }
         else {
-            response.getWriter().write("로그인이 필요합니다.");
+            response.getWriter().write(
+                    new Gson().toJson(new ErrorResponse(String.valueOf(HttpServletResponse.SC_UNAUTHORIZED), "로그인이 필요합니다.")));
         }
     }
 }

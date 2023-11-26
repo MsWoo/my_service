@@ -39,7 +39,7 @@ public class CustomUserDetailsService implements CustomDetailsSerivce {
         }
 
         Member member = memberRepository.findByUserId(username)
-                .orElseThrow(() -> new UsernameNotFoundException("존재하지 않는 Member입니다."));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.OK, ErrorCode.EMPTY_DATA.name()));
 
         // 로그인 잠김 유효성 체크
         if (member.getLoginLockTime() != null && member.getLoginLockTime().isAfter(LocalDateTime.now())) {
