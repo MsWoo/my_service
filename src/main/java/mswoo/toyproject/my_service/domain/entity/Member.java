@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import mswoo.toyproject.my_service.domain.dto.MemberEditDto;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -68,5 +69,11 @@ public class Member extends BaseEntity {
     public void initLoginFail() {
         this.failCount = 0;
         this.loginLockTime = null;
+    }
+
+    public void update(MemberEditDto memberEditDto) {
+        this.userName = memberEditDto.getUserName();
+        this.phoneNumber = memberEditDto.getPhoneNumber();
+//        super.update();
     }
 }

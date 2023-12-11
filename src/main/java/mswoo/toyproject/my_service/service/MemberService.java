@@ -3,6 +3,7 @@ package mswoo.toyproject.my_service.service;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import mswoo.toyproject.my_service.domain.dto.MemberEditDto;
 import mswoo.toyproject.my_service.enums.ErrorCode;
 import mswoo.toyproject.my_service.domain.dto.MemberDto;
 import mswoo.toyproject.my_service.domain.dto.MemberJoinDto;
@@ -16,7 +17,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 @Service
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
 public class MemberService {
     private final PasswordEncoder passwordEncoder;
     private final MemberRepository memberRepository;
@@ -25,6 +25,13 @@ public class MemberService {
         return memberRepository.findAll().stream()
                 .map(MemberDto::toDto)
                 .collect(Collectors.toList());
+    }
+
+    public MemberDto getMemberInfo(Long id) {
+        Member member = memberRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.OK,ErrorCode.EMPTY_DATA.name()));
+
+        return MemberDto.toDto(member);
     }
 
     @Transactional
@@ -39,9 +46,26 @@ public class MemberService {
                 .userName(memberJoinDto.getUserName())
                 .password(passwordEncoder.encode(memberJoinDto.getPassword()))
                 .phoneNumber(memberJoinDto.getPhoneNumber())
+//                .createdBy()
                 .build();
 
         Long id = memberRepository.save(member).getId();
+
+        return MemberDto.builder().id(id).build();
+    }
+
+    @Transactional
+    public MemberDto deleteMember(Long id) {
+        memberRepository.deleteById(id);
+        return MemberDto.builder().id(id).build();
+    }
+
+    @Transactional
+    public MemberDto editMember(Long id, MemberEditDto memberEditDto) {
+        Member member = memberRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.OK, ErrorCode.EMPTY_DATA.name()));
+
+        member.update(memberEditDto);
 
         return MemberDto.builder().id(id).build();
     }
