@@ -20,6 +20,7 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
             AuthenticationException authException) throws IOException, ServletException {
         response.setContentType("application/json;charset=UTF-8");
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        // CustomUserDetailsService의 Exception 처리
         if (authException instanceof UsernameNotFoundException || authException instanceof BadCredentialsException) {
             response.getWriter().write(
                     new Gson().toJson(new ErrorResponse(String.valueOf(HttpServletResponse.SC_BAD_REQUEST), authException.getMessage())));

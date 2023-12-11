@@ -5,6 +5,7 @@ import mswoo.toyproject.my_service.config.jwt.CustomAccessDeniedHandler;
 import mswoo.toyproject.my_service.config.jwt.CustomAuthenticationEntryPoint;
 import mswoo.toyproject.my_service.config.jwt.JwtFilter;
 import mswoo.toyproject.my_service.config.jwt.TokenProvider;
+import mswoo.toyproject.my_service.enums.Role;
 import mswoo.toyproject.my_service.service.TokenInfoService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -34,7 +35,8 @@ public class WebSecurityConfig {
                 )
                 .authorizeHttpRequests(
                         authorize -> authorize
-                                .requestMatchers("/api/v1/login/**").permitAll()
+                                .requestMatchers("/api/{version}/login/**").permitAll()
+                                .requestMatchers("/api/{version}/member/**").hasAnyRole(Role.SUPER.getRole(), Role.ADMIN.getRole())
                                 .anyRequest().authenticated()
                 )
                 .addFilterBefore(new JwtFilter(tokenProvider, tokenInfoService), UsernamePasswordAuthenticationFilter.class)

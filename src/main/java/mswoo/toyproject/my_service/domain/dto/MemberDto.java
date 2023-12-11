@@ -11,6 +11,7 @@ import mswoo.toyproject.my_service.domain.entity.Member;
 public class MemberDto {
     private Long id;
     private String userId;
+    private Long authorityId;
     private String userName;
     private String phoneNumber;
 
@@ -18,6 +19,7 @@ public class MemberDto {
         return MemberDto.builder()
                 .id(entity.getId())
                 .userId(entity.getUserId())
+                .authorityId(entity.getAuthorityId())
                 .userName(entity.getUserName())
                 .phoneNumber(entity.getPhoneNumber())
                 .build();

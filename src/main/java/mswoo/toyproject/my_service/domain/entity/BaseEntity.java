@@ -23,7 +23,6 @@ public class BaseEntity {
     private String updatedBy;
 
     public void update(String userId){
-        this.updatedAt = LocalDateTime.now();
         this.updatedBy = userId;
     }
 }
