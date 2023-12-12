@@ -2,9 +2,11 @@ package mswoo.toyproject.my_service.controller;
 
 import lombok.RequiredArgsConstructor;
 import mswoo.toyproject.my_service.domain.dto.MemberEditDto;
+import mswoo.toyproject.my_service.domain.dto.MemberInfo;
 import mswoo.toyproject.my_service.domain.dto.MemberJoinDto;
 import mswoo.toyproject.my_service.service.MemberService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -42,8 +44,11 @@ public class MemberController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Object> editMember(@PathVariable Long id, @RequestBody MemberEditDto memberEditDto) {
-        return ResponseEntity.ok(memberService.editMember(id, memberEditDto));
+    public ResponseEntity<Object> editMember(
+            @PathVariable Long id,
+            @RequestBody MemberEditDto memberEditDto,
+            @AuthenticationPrincipal MemberInfo memberInfo) {
+        return ResponseEntity.ok(memberService.editMember(id, memberEditDto, memberInfo));
     }
 
 }

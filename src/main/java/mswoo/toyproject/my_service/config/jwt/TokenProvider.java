@@ -15,6 +15,7 @@ import java.util.Date;
 import java.util.stream.Collectors;
 import javax.crypto.SecretKey;
 import lombok.extern.slf4j.Slf4j;
+import mswoo.toyproject.my_service.domain.dto.MemberInfo;
 import mswoo.toyproject.my_service.domain.dto.TokenDto;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -127,9 +128,11 @@ public class TokenProvider {
         Collection<? extends GrantedAuthority> authorities = (authoritiesCliam == null) ?
                 AuthorityUtils.NO_AUTHORITIES : AuthorityUtils.commaSeparatedStringToAuthorityList(claims.get("role").toString());
 
-        User principal = new User(claims.getSubject(), "", authorities);
+        // 로그인 API 제외 모든 요청을 거치는 JWT 필터에서 SecurityContextHolder에 설정할 Authentication 객체에 principal로 memberInfo를 넣어준다.
+        // 컨트롤러에서 @AuthenticationPrincipal 어노테이션을 통해 해당 memberInfo 객체를 가져와서 사용 가능하다.
+        MemberInfo memberInfo = new MemberInfo(claims.getSubject(), "", authorities);
 
-        return new UsernamePasswordAuthenticationToken(principal, token, authorities);
+        return new UsernamePasswordAuthenticationToken(memberInfo, token, authorities);
     }
 
     public Claims getClaims(String token) {
