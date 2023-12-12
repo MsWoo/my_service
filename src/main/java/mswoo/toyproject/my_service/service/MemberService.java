@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import mswoo.toyproject.my_service.domain.dto.MemberEditDto;
+import mswoo.toyproject.my_service.domain.dto.MemberInfo;
 import mswoo.toyproject.my_service.enums.ErrorCode;
 import mswoo.toyproject.my_service.domain.dto.MemberDto;
 import mswoo.toyproject.my_service.domain.dto.MemberJoinDto;
@@ -34,7 +35,7 @@ public class MemberService {
         return MemberDto.toDto(member);
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public MemberDto joinMember(MemberJoinDto memberJoinDto) {
         if (memberRepository.existsByUserId(memberJoinDto.getUserId())) {
             throw new ResponseStatusException(HttpStatus.OK, ErrorCode.DUPLICATE_ID.name());
@@ -46,7 +47,7 @@ public class MemberService {
                 .userName(memberJoinDto.getUserName())
                 .password(passwordEncoder.encode(memberJoinDto.getPassword()))
                 .phoneNumber(memberJoinDto.getPhoneNumber())
-//                .createdBy()
+                .createdBy(memberJoinDto.getUserId())
                 .build();
 
         Long id = memberRepository.save(member).getId();
@@ -54,18 +55,18 @@ public class MemberService {
         return MemberDto.builder().id(id).build();
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public MemberDto deleteMember(Long id) {
         memberRepository.deleteById(id);
         return MemberDto.builder().id(id).build();
     }
 
-    @Transactional
-    public MemberDto editMember(Long id, MemberEditDto memberEditDto) {
+    @Transactional(rollbackFor = Exception.class)
+    public MemberDto editMember(Long id, MemberEditDto memberEditDto, MemberInfo memberInfo) {
         Member member = memberRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.OK, ErrorCode.EMPTY_DATA.name()));
 
-        member.update(memberEditDto);
+        member.update(memberEditDto, memberInfo.getUserId());
 
         return MemberDto.builder().id(id).build();
     }

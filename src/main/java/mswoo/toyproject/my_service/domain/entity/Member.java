@@ -71,9 +71,9 @@ public class Member extends BaseEntity {
         this.loginLockTime = null;
     }
 
-    public void update(MemberEditDto memberEditDto) {
+    public void update(MemberEditDto memberEditDto, String userId) {
         this.userName = memberEditDto.getUserName();
         this.phoneNumber = memberEditDto.getPhoneNumber();
-//        super.update();
+        super.update(userId);
     }
 }
