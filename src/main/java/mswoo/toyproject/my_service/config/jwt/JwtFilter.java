@@ -14,7 +14,6 @@ import mswoo.toyproject.my_service.service.TokenInfoService;
 import mswoo.toyproject.my_service.util.CookieUtil;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.server.ResponseStatusException;
@@ -31,10 +30,7 @@ public class JwtFilter extends OncePerRequestFilter {
             FilterChain filterChain) throws ServletException, IOException {
 
         // 쿠키 or 헤더에서 토큰 추출
-        String accessToken = CookieUtil.getAccessToken((HttpServletRequest) request);
-        if (ObjectUtils.isEmpty(accessToken)) {
-            accessToken = tokenProvider.resolveToken((HttpServletRequest) request);
-        }
+        String accessToken = CookieUtil.getAccessToken(request);
 
         if (StringUtils.hasText(accessToken)) {
             try {
