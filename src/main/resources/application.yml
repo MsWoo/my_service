@@ -1,9 +1,22 @@
 server:
   shutdown: graceful
   port: 8080
+
 spring:
   profiles:
     active: local
+
+springdoc:
+  api-docs:
+    enabled: true
+    path: /api/v1/swagger/api-docs
+  swagger-ui:
+    path: /api/v1/swagger/index.html
+    disable-swagger-default-url: true
+    with-credentials: true
+    display-request-duration: true
+  default-consumes-media-type: application/json
+  default-produces-media-type: application/json
 
 ---
 
