@@ -33,15 +33,6 @@ public class CustomUserDetailsService implements CustomDetailsSerivce {
 
     @Override
     public UserDetails loadUserByUsername(String username, String password) {
-
-        // ID, PW 유효성 체크
-        if (StringUtils.isEmpty(username)) {
-            throw new UsernameNotFoundException("ID를 입력해주세요.");
-        }
-        if (StringUtils.isEmpty(password)) {
-            throw new BadCredentialsException("Password를 입력해주세요.");
-        }
-
         Member member = memberRepository.findByUserId(username)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.OK, ErrorCode.EMPTY_DATA.name()));
 

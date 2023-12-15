@@ -31,6 +31,9 @@ public class JwtFilter extends OncePerRequestFilter {
 
         // 쿠키 or 헤더에서 토큰 추출
         String accessToken = CookieUtil.getAccessToken(request);
+        if (!StringUtils.hasText(accessToken)) {
+            accessToken = tokenProvider.resolveToken(request);
+        }
 
         if (StringUtils.hasText(accessToken)) {
             try {
