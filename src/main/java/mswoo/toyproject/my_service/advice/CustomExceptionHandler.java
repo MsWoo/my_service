@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
@@ -49,6 +50,15 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
             WebRequest request) {
         log.info(ex.getMessage(), ex);
         return new ResponseEntity<>(new ErrorResponse(String.valueOf(ex.getStatusCode()), ex.getMessage()), HttpStatus.METHOD_NOT_ALLOWED);
+    }
+
+    @Override
+    protected ResponseEntity<Object> handleMissingServletRequestParameter(
+            MissingServletRequestParameterException ex, HttpHeaders headers, HttpStatusCode status,
+            WebRequest request) {
+        log.info(ex.getMessage(), ex);
+        String message = ex.getParameterName() + "를 입력해주세요.";
+        return new ResponseEntity<>(new ErrorResponse(String.valueOf(HttpStatus.BAD_REQUEST.value()), message), HttpStatus.BAD_REQUEST);
     }
 
     /**
