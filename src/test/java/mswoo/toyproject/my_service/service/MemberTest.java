@@ -11,8 +11,8 @@ import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
-import mswoo.toyproject.my_service.domain.entity.TestVisitor;
-import mswoo.toyproject.my_service.repository.TestVisitorRepository;
+import mswoo.toyproject.my_service.domain.entity.Member;
+import mswoo.toyproject.my_service.repository.MemberRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -28,15 +28,15 @@ import org.springframework.transaction.annotation.Transactional;
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @Transactional
-public class VisitorTest {
+public class MemberTest {
 
     @Autowired
-    private TestVisitorRepository visitorRepository;
+    private MemberRepository memberRepository;
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    private List<TestVisitor> visitorList = new ArrayList<>();
+    private List<Member> memberList = new ArrayList<>();
 
     private long startTime;
 
@@ -50,11 +50,15 @@ public class VisitorTest {
      */
     @BeforeEach
     void beforeEachTest() {
-        for (int i=1; i<=500; i++) {
+        for (int i=1; i<=100; i++) {
             LocalDateTime randomDateTime = this.generateRandomDateTime();
 
-            visitorList.add(TestVisitor.builder()
-                    .name("Test " + i)
+            memberList.add(Member.builder()
+                    .userId("TID" + i)
+                    .userName("TName" + i)
+                    .phoneNumber("010-0000-0000")
+                    .password("password")
+                    .authorityId(1L)
                     .createdAt(randomDateTime)
                     .build());
         }
@@ -76,7 +80,7 @@ public class VisitorTest {
     void Jpa_saveAll() {
         System.out.println("--- saveAll() Start ---");
 
-        visitorRepository.saveAll(visitorList);
+        memberRepository.saveAll(memberList);
 
         System.out.println("--- saveAll() End ---");
     }
@@ -90,19 +94,19 @@ public class VisitorTest {
 
         int batchCount = 0;
 
-        List<TestVisitor> subVisitorList = new ArrayList<>();
+        List<Member> subMemberList = new ArrayList<>();
 
-        for (int i=0; i< visitorList.size(); i++) {
-            subVisitorList.add(visitorList.get(i));
+        for (int i=0; i< memberList.size(); i++) {
+            subMemberList.add(memberList.get(i));
 
             if ((i + 1) % this.batchSize == 0) {
-                batchCount = this.batchUpdate(batchCount, subVisitorList);
-                subVisitorList.clear();
+                batchCount = this.batchUpdate(batchCount, subMemberList);
+                subMemberList.clear();
             }
         }
 
-        if (!subVisitorList.isEmpty()) {
-            batchCount = this.batchUpdate(batchCount, subVisitorList);
+        if (!subMemberList.isEmpty()) {
+            batchCount = this.batchUpdate(batchCount, subMemberList);
         }
 
         System.out.println("BatchCount : " + batchCount);
@@ -118,7 +122,7 @@ public class VisitorTest {
         Connection con = null;
         PreparedStatement pstmt = null;
 
-        String bulkInsertQuery = "INSERT INTO visitor (name, created_at) VALUES (?, ?)";
+        String bulkInsertQuery = "INSERT INTO member (user_id, user_name, phone_number, password, authority_id, created_at) VALUES (?, ?, ?, ?, ?, ?)";
 
         int rowNum = 0;
 
@@ -126,9 +130,13 @@ public class VisitorTest {
             con = jdbcTemplate.getDataSource().getConnection();
             pstmt = con.prepareStatement(bulkInsertQuery);
 
-            for (int i=0; i< visitorList.size(); i++) {
-                pstmt.setString(1, visitorList.get(i).getName());
-                pstmt.setTimestamp(2, Timestamp.valueOf(visitorList.get(i).getCreatedAt()));
+            for (int i=0; i< memberList.size(); i++) {
+                pstmt.setString(1, memberList.get(i).getUserId());
+                pstmt.setString(2, memberList.get(i).getUserName());
+                pstmt.setString(3, memberList.get(i).getPhoneNumber());
+                pstmt.setString(4, memberList.get(i).getPassword());
+                pstmt.setLong(5, memberList.get(i).getAuthorityId());
+                pstmt.setTimestamp(6, Timestamp.valueOf(memberList.get(i).getCreatedAt()));
 
                 pstmt.addBatch();
                 pstmt.clearParameters();
@@ -158,7 +166,7 @@ public class VisitorTest {
     void Jpa_findByCreatedAt() {
         System.out.println("--- findAllByCreatedAtIsBetween() Start ---");
 
-        List<TestVisitor> list = visitorRepository.findAllByCreatedAtIsBetween(
+        List<Member> list = memberRepository.findAllByCreatedAtIsBetween(
                 LocalDateTime.of(2023, Month.JANUARY, 1, 0, 0),
                 LocalDateTime.of(2023, Month.JANUARY, 31, 23, 59));
 
@@ -171,22 +179,26 @@ public class VisitorTest {
     /**
      * JdbcTemplate에서 제공하는 batchUpdate 메소드
      * @param batchCount
-     * @param subVisitorList
+     * @param subMemberList
      * @return
      */
-    private int batchUpdate(int batchCount, List<TestVisitor> subVisitorList) {
-        String bulkInsertQuery = "INSERT INTO visitor (name, created_at) VALUES (?, ?)";
+    private int batchUpdate(int batchCount, List<Member> subMemberList) {
+        String bulkInsertQuery = "INSERT INTO member (user_id, user_name, phone_number, password, authority_id, created_at) VALUES (?, ?, ?, ?, ?, ?)";
 
         jdbcTemplate.batchUpdate(bulkInsertQuery, new BatchPreparedStatementSetter() {
             @Override
             public void setValues(PreparedStatement ps, int i) throws SQLException {
-                ps.setString(1, subVisitorList.get(i).getName());
-                ps.setTimestamp(2, Timestamp.valueOf(subVisitorList.get(i).getCreatedAt()));
+                ps.setString(1, memberList.get(i).getUserId());
+                ps.setString(2, memberList.get(i).getUserName());
+                ps.setString(3, memberList.get(i).getPhoneNumber());
+                ps.setString(4, memberList.get(i).getPassword());
+                ps.setLong(5, memberList.get(i).getAuthorityId());
+                ps.setTimestamp(6, Timestamp.valueOf(memberList.get(i).getCreatedAt()));
             }
 
             @Override
             public int getBatchSize() {
-                return subVisitorList.size();
+                return subMemberList.size();
             }
         });
 
@@ -206,7 +218,7 @@ public class VisitorTest {
 
         long randomDateTime = ThreadLocalRandom.current().nextLong(startDateTime, endDateTime);
 
-        return LocalDateTime.ofEpochSecond(randomDateTime, 0, java.time.ZoneOffset.UTC);
+        return LocalDateTime.ofEpochSecond(randomDateTime, 0, ZoneOffset.UTC);
     }
 
 }
