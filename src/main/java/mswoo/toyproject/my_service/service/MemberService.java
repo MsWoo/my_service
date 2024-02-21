@@ -41,6 +41,8 @@ public class MemberService {
             throw new ResponseStatusException(HttpStatus.OK, ErrorCode.DUPLICATE_ID.name());
         }
 
+        // todo [gotoend] mapper로 전환 필요
+        // 필드가 추가될때마다 변경해줘야한다. mapper로 한방에 변환
         Member member = Member.builder()
                 .authorityId(1L)
                 .userId(memberJoinDto.getUserId())
@@ -66,6 +68,7 @@ public class MemberService {
         Member member = memberRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.OK, ErrorCode.EMPTY_DATA.name()));
 
+        // todo [gotoend] mapper로 전환 필요
         member.update(memberEditDto, memberInfo.getUserId());
 
         return MemberDto.builder().id(id).build();

@@ -36,7 +36,7 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(
                         authorize -> authorize
                                 .requestMatchers("/api/{version}/swagger/**", "/api/{version}/login/**").permitAll()
-                                .requestMatchers("/api/{version}/member/**").hasAnyRole(Role.SUPER.getRole(), Role.ADMIN.getRole())
+//                                .requestMatchers("/api/{version}/member/**").hasAnyRole(Role.SUPER.getRole(), Role.ADMIN.getRole())
                                 .anyRequest().authenticated()
                 )
                 .addFilterBefore(new JwtFilter(tokenProvider, tokenInfoService), UsernamePasswordAuthenticationFilter.class)

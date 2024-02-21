@@ -6,7 +6,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 
-@Component
 public class CookieUtil {
     private static final int COOKIE_EXPIRATION_TIME = 3 * 60 * 60;
 
@@ -31,6 +30,5 @@ public class CookieUtil {
         cookie.setMaxAge(COOKIE_EXPIRATION_TIME);
         response.addCookie(cookie);
     }
-
 
 }
