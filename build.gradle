@@ -4,54 +4,94 @@ plugins {
 	id 'io.spring.dependency-management' version '1.1.3'
 }
 
-group = 'mswoo.toyproject'
-version = '0.0.1-SNAPSHOT'
+allprojects {
+	apply plugin: 'java'
 
-java {
-	sourceCompatibility = '17'
+	group = 'ms.toy'
+	version = '0.0.1-SNAPSHOT'
+
+	java {
+		sourceCompatibility = '17'
+	}
+
+	repositories {
+		mavenCentral()
+	}
+
 }
 
-configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
+subprojects {
+	apply plugin: 'java-library'
+	apply plugin: 'org.springframework.boot'
+	apply plugin: 'io.spring.dependency-management'
+
+	dependencies {
+		// jpa
+		implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+		// RequestBody Validation
+		implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+		// mysql
+		runtimeOnly 'com.mysql:mysql-connector-j:8.0.33'
+
+		// redis
+		implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
+		// swagger
+		implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
+
+		// gson
+		implementation 'com.google.code.gson:gson:2.10.1'
+
+		// jwt
+		implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+		implementation 'io.jsonwebtoken:jjwt-impl:0.11.5'
+		implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+
+		// lombok
+		compileOnly 'org.projectlombok:lombok'
+		annotationProcessor 'org.projectlombok:lombok'
 	}
 }
 
-repositories {
-	mavenCentral()
+project(":core_module") {
+	bootJar {enabled=false}
+	jar {enabled=true}
+
+	dependencies {
+
+	}
 }
 
-dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-security'
+project(":admin_module") {
+	dependencies {
+		implementation project(":core_module")
 
-	// RequestBody Validation
-	implementation 'org.springframework.boot:spring-boot-starter-validation'
+		implementation 'org.springframework.boot:spring-boot-starter-web'
+		implementation 'org.springframework.boot:spring-boot-starter-security'
 
-	// jwt
-	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
-	implementation 'io.jsonwebtoken:jjwt-impl:0.11.5'
-	implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5'
-
-	// mysql
-	runtimeOnly 'com.mysql:mysql-connector-j:8.0.33'
-
-	// redis
-	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-
-	// gson
-	implementation 'com.google.code.gson:gson:2.10.1'
-
-	// swagger
-	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
-
-	compileOnly 'org.projectlombok:lombok'
-	annotationProcessor 'org.projectlombok:lombok'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'org.springframework.security:spring-security-test'
+		testImplementation 'org.springframework.boot:spring-boot-starter-test'
+		testImplementation 'org.springframework.security:spring-security-test'
+	}
+	test {
+		exclude '**/*'
+		useJUnitPlatform()
+	}
 }
 
-tasks.named('test') {
-	useJUnitPlatform()
+project(":user_module") {
+	dependencies {
+		implementation project(":core_module")
+
+		implementation 'org.springframework.boot:spring-boot-starter-web'
+		implementation 'org.springframework.boot:spring-boot-starter-security'
+
+		testImplementation 'org.springframework.boot:spring-boot-starter-test'
+		testImplementation 'org.springframework.security:spring-security-test'
+	}
+	test {
+		exclude '**/*'
+		useJUnitPlatform()
+	}
 }

@@ -1,1 +1,4 @@
 rootProject.name = 'my_service'
+include 'core_module'
+include 'admin_module'
+include 'user_module'

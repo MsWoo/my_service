@@ -1,0 +1,32 @@
+server:
+  shutdown: graceful
+  port: 8180
+
+spring:
+  profiles:
+    active: local
+    include:
+      - core
+  application:
+    name: My Service - 사용자 모듈
+
+springdoc:
+  api-docs:
+    enabled: true
+    path: /api/v1/swagger/api-docs
+  swagger-ui:
+    path: /api/v1/swagger/index.html
+    disable-swagger-default-url: true
+    with-credentials: true
+    display-request-duration: true
+  default-consumes-media-type: application/json
+  default-produces-media-type: application/json
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: local
+
+---
