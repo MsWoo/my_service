@@ -2,9 +2,9 @@ package ms.toy.my_service.service;
 
 import lombok.RequiredArgsConstructor;
 import ms.toy.my_service.domain.dto.TokenDto;
+import ms.toy.my_service.domain.entity.TokenInfo;
 import ms.toy.my_service.enums.ErrorCode;
 import ms.toy.my_service.repository.TokenRepository;
-import ms.toy.my_service.domain.entity.TokenInfo;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;

@@ -15,10 +15,10 @@ import org.springframework.context.annotation.Configuration;
 public class SwaggerConfig {
 
 //    @Bean
-//    public GroupedOpenApi memberAPI() {
+//    public GroupedOpenApi adminAPI() {
 //        return GroupedOpenApi.builder()
-//                .group("Member API")
-//                .pathsToMatch("/api/v1/member/**")
+//                .group("Admin API")
+//                .pathsToMatch("/api/v1/admin/**")
 //                .build();
 //    }
 //

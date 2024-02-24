@@ -3,20 +3,20 @@ package ms.toy.my_service.domain.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
 import lombok.Data;
-import ms.toy.my_service.domain.entity.Member;
+import ms.toy.my_service.domain.entity.Admin;
 
 @Data
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class MemberDto {
+public class AdminDto {
     private Long id;
     private String userId;
     private Long authorityId;
     private String userName;
     private String phoneNumber;
 
-    public static MemberDto toDto(Member entity) {
-        return MemberDto.builder()
+    public static AdminDto toDto(Admin entity) {
+        return AdminDto.builder()
                 .id(entity.getId())
                 .userId(entity.getUserId())
                 .authorityId(entity.getAuthorityId())

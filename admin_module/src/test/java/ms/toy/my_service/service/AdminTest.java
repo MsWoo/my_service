@@ -11,8 +11,8 @@ import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
-import ms.toy.my_service.domain.entity.Member;
-import ms.toy.my_service.repository.MemberRepository;
+import ms.toy.my_service.domain.entity.Admin;
+import ms.toy.my_service.repository.AdminRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -28,15 +28,15 @@ import org.springframework.transaction.annotation.Transactional;
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @Transactional
-public class MemberTest {
+public class AdminTest {
 
     @Autowired
-    private MemberRepository memberRepository;
+    private AdminRepository adminRepository;
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    private List<Member> memberList = new ArrayList<>();
+    private List<Admin> adminList = new ArrayList<>();
 
     private long startTime;
 
@@ -53,7 +53,7 @@ public class MemberTest {
         for (int i=1; i<=100; i++) {
             LocalDateTime randomDateTime = this.generateRandomDateTime();
 
-            memberList.add(Member.builder()
+            adminList.add(Admin.builder()
                     .userId("TID" + i)
                     .userName("TName" + i)
                     .phoneNumber("010-0000-0000")
@@ -80,7 +80,7 @@ public class MemberTest {
     void Jpa_saveAll() {
         System.out.println("--- saveAll() Start ---");
 
-        memberRepository.saveAll(memberList);
+        adminRepository.saveAll(adminList);
 
         System.out.println("--- saveAll() End ---");
     }
@@ -94,19 +94,19 @@ public class MemberTest {
 
         int batchCount = 0;
 
-        List<Member> subMemberList = new ArrayList<>();
+        List<Admin> subAdminList = new ArrayList<>();
 
-        for (int i=0; i< memberList.size(); i++) {
-            subMemberList.add(memberList.get(i));
+        for (int i=0; i< adminList.size(); i++) {
+            subAdminList.add(adminList.get(i));
 
             if ((i + 1) % this.batchSize == 0) {
-                batchCount = this.batchUpdate(batchCount, subMemberList);
-                subMemberList.clear();
+                batchCount = this.batchUpdate(batchCount, subAdminList);
+                subAdminList.clear();
             }
         }
 
-        if (!subMemberList.isEmpty()) {
-            batchCount = this.batchUpdate(batchCount, subMemberList);
+        if (!subAdminList.isEmpty()) {
+            batchCount = this.batchUpdate(batchCount, subAdminList);
         }
 
         System.out.println("BatchCount : " + batchCount);
@@ -122,7 +122,7 @@ public class MemberTest {
         Connection con = null;
         PreparedStatement pstmt = null;
 
-        String bulkInsertQuery = "INSERT INTO member (user_id, user_name, phone_number, password, authority_id, created_at) VALUES (?, ?, ?, ?, ?, ?)";
+        String bulkInsertQuery = "INSERT INTO admin (user_id, user_name, phone_number, password, authority_id, created_at) VALUES (?, ?, ?, ?, ?, ?)";
 
         int rowNum = 0;
 
@@ -130,13 +130,13 @@ public class MemberTest {
             con = jdbcTemplate.getDataSource().getConnection();
             pstmt = con.prepareStatement(bulkInsertQuery);
 
-            for (int i=0; i< memberList.size(); i++) {
-                pstmt.setString(1, memberList.get(i).getUserId());
-                pstmt.setString(2, memberList.get(i).getUserName());
-                pstmt.setString(3, memberList.get(i).getPhoneNumber());
-                pstmt.setString(4, memberList.get(i).getPassword());
-                pstmt.setLong(5, memberList.get(i).getAuthorityId());
-                pstmt.setTimestamp(6, Timestamp.valueOf(memberList.get(i).getCreatedAt()));
+            for (int i=0; i< adminList.size(); i++) {
+                pstmt.setString(1, adminList.get(i).getUserId());
+                pstmt.setString(2, adminList.get(i).getUserName());
+                pstmt.setString(3, adminList.get(i).getPhoneNumber());
+                pstmt.setString(4, adminList.get(i).getPassword());
+                pstmt.setLong(5, adminList.get(i).getAuthorityId());
+                pstmt.setTimestamp(6, Timestamp.valueOf(adminList.get(i).getCreatedAt()));
 
                 pstmt.addBatch();
                 pstmt.clearParameters();
@@ -166,7 +166,7 @@ public class MemberTest {
     void Jpa_findByCreatedAt() {
         System.out.println("--- findAllByCreatedAtIsBetween() Start ---");
 
-        List<Member> list = memberRepository.findAllByCreatedAtIsBetween(
+        List<Admin> list = adminRepository.findAllByCreatedAtIsBetween(
                 LocalDateTime.of(2023, Month.JANUARY, 1, 0, 0),
                 LocalDateTime.of(2023, Month.JANUARY, 31, 23, 59));
 
@@ -179,26 +179,26 @@ public class MemberTest {
     /**
      * JdbcTemplate에서 제공하는 batchUpdate 메소드
      * @param batchCount
-     * @param subMemberList
+     * @param subAdminList
      * @return
      */
-    private int batchUpdate(int batchCount, List<Member> subMemberList) {
-        String bulkInsertQuery = "INSERT INTO member (user_id, user_name, phone_number, password, authority_id, created_at) VALUES (?, ?, ?, ?, ?, ?)";
+    private int batchUpdate(int batchCount, List<Admin> subAdminList) {
+        String bulkInsertQuery = "INSERT INTO admin (user_id, user_name, phone_number, password, authority_id, created_at) VALUES (?, ?, ?, ?, ?, ?)";
 
         jdbcTemplate.batchUpdate(bulkInsertQuery, new BatchPreparedStatementSetter() {
             @Override
             public void setValues(PreparedStatement ps, int i) throws SQLException {
-                ps.setString(1, memberList.get(i).getUserId());
-                ps.setString(2, memberList.get(i).getUserName());
-                ps.setString(3, memberList.get(i).getPhoneNumber());
-                ps.setString(4, memberList.get(i).getPassword());
-                ps.setLong(5, memberList.get(i).getAuthorityId());
-                ps.setTimestamp(6, Timestamp.valueOf(memberList.get(i).getCreatedAt()));
+                ps.setString(1, adminList.get(i).getUserId());
+                ps.setString(2, adminList.get(i).getUserName());
+                ps.setString(3, adminList.get(i).getPhoneNumber());
+                ps.setString(4, adminList.get(i).getPassword());
+                ps.setLong(5, adminList.get(i).getAuthorityId());
+                ps.setTimestamp(6, Timestamp.valueOf(adminList.get(i).getCreatedAt()));
             }
 
             @Override
             public int getBatchSize() {
-                return subMemberList.size();
+                return subAdminList.size();
             }
         });
 

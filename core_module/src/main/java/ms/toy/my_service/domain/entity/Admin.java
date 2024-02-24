@@ -11,20 +11,20 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import ms.toy.my_service.domain.dto.MemberEditDto;
+import ms.toy.my_service.domain.dto.AdminEditDto;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
-@Table(name = "member")
+@Table(name = "admin")
 @SuperBuilder
 @Data
 @DynamicInsert
 @DynamicUpdate
 @AllArgsConstructor
 @NoArgsConstructor
-public class Member extends BaseEntity {
+public class Admin extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -71,9 +71,9 @@ public class Member extends BaseEntity {
         this.loginLockTime = null;
     }
 
-    public void update(MemberEditDto memberEditDto, String userId) {
-        this.userName = memberEditDto.getUserName();
-        this.phoneNumber = memberEditDto.getPhoneNumber();
+    public void update(AdminEditDto adminEditDto, String userId) {
+        this.userName = adminEditDto.getUserName();
+        this.phoneNumber = adminEditDto.getPhoneNumber();
         super.update(userId);
     }
 }

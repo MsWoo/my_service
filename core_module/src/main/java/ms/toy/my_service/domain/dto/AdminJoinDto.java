@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 
 @Getter
-public class MemberJoinDto {
+public class AdminJoinDto {
     @NotBlank(message = "아이디는 공백일 수 없습니다.")
     @Schema(description = "아이디", example = "userId")
     private String userId;

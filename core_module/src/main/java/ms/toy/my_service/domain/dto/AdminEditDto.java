@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 
 @Getter
-public class MemberEditDto {
+public class AdminEditDto {
     @Schema(description = "이름", example = "홍길동")
     private String userName;
 

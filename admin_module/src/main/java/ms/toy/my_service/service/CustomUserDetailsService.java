@@ -4,13 +4,13 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import ms.toy.my_service.jwt.CustomDetailsSerivce;
-import ms.toy.my_service.enums.ErrorCode;
+import ms.toy.my_service.domain.entity.Admin;
 import ms.toy.my_service.domain.entity.Authority;
-import ms.toy.my_service.domain.entity.Member;
+import ms.toy.my_service.enums.ErrorCode;
 import ms.toy.my_service.enums.Role;
+import ms.toy.my_service.jwt.CustomDetailsSerivce;
+import ms.toy.my_service.repository.AdminRepository;
 import ms.toy.my_service.repository.AuthorityRepository;
-import ms.toy.my_service.repository.MemberRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -25,38 +25,38 @@ import org.springframework.web.server.ResponseStatusException;
 public class CustomUserDetailsService implements CustomDetailsSerivce {
 
     private final PasswordEncoder passwordEncoder;
-    private final MemberRepository memberRepository;
+    private final AdminRepository adminRepository;
     private final AuthorityRepository authorityRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username, String password) {
-        Member member = memberRepository.findByUserId(username)
+        Admin admin = adminRepository.findByUserId(username)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.OK, ErrorCode.EMPTY_DATA.name()));
 
         // 로그인 잠김 유효성 체크
-        if (member.getLoginLockTime() != null && member.getLoginLockTime().isAfter(LocalDateTime.now())) {
+        if (admin.getLoginLockTime() != null && admin.getLoginLockTime().isAfter(LocalDateTime.now())) {
             throw new ResponseStatusException(HttpStatus.OK, ErrorCode.LOGIN_LOCK.name());
         }
 
         // 비밀번호 검증
-        if (!passwordEncoder.matches(password, member.getPassword())) {
-            member.increaseFailCount();
-            memberRepository.save(member);
+        if (!passwordEncoder.matches(password, admin.getPassword())) {
+            admin.increaseFailCount();
+            adminRepository.save(admin);
             throw new ResponseStatusException(HttpStatus.OK, ErrorCode.LOGIN_FAIL.name());
         }
 
         // == 로그인 성공 ==
-        member.initLoginFail();
-        memberRepository.save(member);
+        admin.initLoginFail();
+        adminRepository.save(admin);
 
-        Authority authority = authorityRepository.findById(member.getAuthorityId()).get();
+        Authority authority = authorityRepository.findById(admin.getAuthorityId()).get();
         Role role = Role.valueOf(authority.getAuthorityName());
 
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
         grantedAuthorities.add(new SimpleGrantedAuthority(role.getAuthority()));
 
         User user = new User(
-                member.getUserId(),
+                admin.getUserId(),
                 "",
                 grantedAuthorities
         );
