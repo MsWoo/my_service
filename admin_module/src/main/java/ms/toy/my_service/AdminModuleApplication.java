@@ -1,13 +1,13 @@
-package mswoo.toyproject.my_service;
+package ms.toy.my_service;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class MyServiceApplication {
+public class AdminModuleApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(MyServiceApplication.class, args);
+		SpringApplication.run(AdminModuleApplication.class, args);
 	}
 
 }

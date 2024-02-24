@@ -1,10 +1,10 @@
-package mswoo.toyproject.my_service;
+package ms.toy.my_service;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class MyServiceApplicationTests {
+class AdminModuleApplicationTests {
 
 	@Test
 	void contextLoads() {
