@@ -34,7 +34,7 @@ public class SwaggerConfig {
     public OpenAPI openAPI() {
         return new OpenAPI()
                 .info(
-                        new Info().title("Admin Module").description("My Service Admin Module Swagger API 문서입니다.").version("v0.0.1"))
+                        new Info().title("User Module").description("My Service User Module Swagger API 문서입니다.").version("v0.0.1"))
                 .components(
                         new Components().addSecuritySchemes("accessToken", new SecurityScheme()
                                 .type(Type.HTTP)

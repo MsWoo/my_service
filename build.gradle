@@ -26,6 +26,9 @@ subprojects {
 	apply plugin: 'io.spring.dependency-management'
 
 	dependencies {
+		implementation 'org.springframework.boot:spring-boot-starter-web'
+		implementation 'org.springframework.boot:spring-boot-starter-security'
+
 		// jpa
 		implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
@@ -68,9 +71,6 @@ project(":admin_module") {
 	dependencies {
 		implementation project(":core_module")
 
-		implementation 'org.springframework.boot:spring-boot-starter-web'
-		implementation 'org.springframework.boot:spring-boot-starter-security'
-
 		testImplementation 'org.springframework.boot:spring-boot-starter-test'
 		testImplementation 'org.springframework.security:spring-security-test'
 	}
@@ -83,9 +83,6 @@ project(":admin_module") {
 project(":user_module") {
 	dependencies {
 		implementation project(":core_module")
-
-		implementation 'org.springframework.boot:spring-boot-starter-web'
-		implementation 'org.springframework.boot:spring-boot-starter-security'
 
 		testImplementation 'org.springframework.boot:spring-boot-starter-test'
 		testImplementation 'org.springframework.security:spring-security-test'

@@ -1,4 +1,4 @@
-package ms.toy.my_service.config.jwt;
+package ms.toy.my_service.jwt;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;

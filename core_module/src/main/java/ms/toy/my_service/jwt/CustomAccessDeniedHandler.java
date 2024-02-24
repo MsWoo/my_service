@@ -1,4 +1,4 @@
-package ms.toy.my_service.config.jwt;
+package ms.toy.my_service.jwt;
 
 import com.google.gson.Gson;
 import jakarta.servlet.ServletException;

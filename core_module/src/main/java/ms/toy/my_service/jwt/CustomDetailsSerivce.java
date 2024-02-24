@@ -1,4 +1,4 @@
-package ms.toy.my_service.config.jwt;
+package ms.toy.my_service.jwt;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

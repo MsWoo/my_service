@@ -1,4 +1,4 @@
-package ms.toy.my_service.config.jwt;
+package ms.toy.my_service.jwt;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationProvider;
