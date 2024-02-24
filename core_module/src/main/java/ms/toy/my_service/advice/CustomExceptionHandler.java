@@ -20,7 +20,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @Slf4j
 @RestControllerAdvice
 public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
-
+123
     /**
      * 404 Not Found Error Handling
      * @param ex the exception to handle
