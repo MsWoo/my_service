@@ -18,7 +18,7 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/my_service?rewriteBatchedStatements=true
+    url: jdbc:mysql://172.30.1.14:3306/my_service?rewriteBatchedStatements=true
     username: root
     password: root
 
@@ -33,7 +33,7 @@ jwt:
   refresh-expiration-time: 10800000 # 3시간: 3 * 60 * 60 * 1000 = 3600000
 
 redis:
-  url: localhost
+  url: 172.30.1.14
   port: 6379
 
 ---
