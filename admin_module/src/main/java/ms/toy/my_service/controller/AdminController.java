@@ -18,6 +18,7 @@ import ms.toy.my_service.domain.dto.UserInfo;
 import ms.toy.my_service.service.AdminService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,7 +41,7 @@ public class AdminController {
             @ApiResponse(responseCode = "200", description = "SUCCESS", content = @Content(schema = @Schema(implementation = List.class))),
             @ApiResponse(responseCode = "500", description = "FAIL", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
-    @GetMapping("/search")
+    @GetMapping
     public ResponseEntity<Object> searchAdmin() {
         return ResponseEntity.ok(adminService.searchAdmin());
     }
