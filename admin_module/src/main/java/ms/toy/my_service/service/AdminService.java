@@ -1,20 +1,19 @@
 package ms.toy.my_service.service;
 
-import java.util.List;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
-import ms.toy.my_service.domain.dto.AdminDto;
-import ms.toy.my_service.domain.dto.AdminEditDto;
-import ms.toy.my_service.domain.dto.AdminJoinDto;
-import ms.toy.my_service.domain.dto.UserInfo;
+import ms.toy.my_service.domain.dto.*;
 import ms.toy.my_service.domain.entity.Admin;
 import ms.toy.my_service.enums.ErrorCode;
 import ms.toy.my_service.repository.AdminRepository;
+import ms.toy.my_service.repository.search.AdminSearchCondition;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -22,10 +21,18 @@ public class AdminService {
     private final PasswordEncoder passwordEncoder;
     private final AdminRepository adminRepository;
 
-    public List<AdminDto> searchAdmin() {
-        return adminRepository.findAll().stream()
-                .map(AdminDto::toDto)
-                .collect(Collectors.toList());
+    public CommonPageDto searchAdmin(AdminSearchCondition adminSearchCondition) {
+        Page<Admin> adminPage = adminRepository.searchAdmin(adminSearchCondition, adminSearchCondition.getPageable());
+
+        return CommonPageDto.builder()
+                .list(adminPage.stream()
+                        .map(AdminDto::toDto)
+                        .collect(Collectors.toList()))
+                .pageIndex(adminSearchCondition.getPageIndex())
+                .pageSize(adminSearchCondition.getPageSize())
+                .totalPage(adminPage.getTotalPages())
+                .totalCount(adminPage.getTotalElements())
+                .build();
     }
 
     public AdminDto getAdminInfo(Long id) {
@@ -44,10 +51,10 @@ public class AdminService {
         // todo [gotoend] mapper로 전환 필요
         // 필드가 추가될때마다 변경해줘야한다. mapper로 한방에 변환
         Admin admin = Admin.builder()
-                .authorityId(1L)
+                .authorityId(2L)
                 .userId(adminJoinDto.getUserId())
                 .userName(adminJoinDto.getUserName())
-                .password(passwordEncoder.encode(adminJoinDto.getPassword()))
+                .password(passwordEncoder.encode("1234"))
                 .phoneNumber(adminJoinDto.getPhoneNumber())
                 .createdBy(adminJoinDto.getUserId())
                 .build();

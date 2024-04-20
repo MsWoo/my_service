@@ -14,9 +14,9 @@ public class AdminJoinDto {
     @Schema(description = "이름", example = "홍길동")
     private String userName;
 
-    @NotBlank(message = "비밀번호는 공백일 수 없습니다.")
-    @Schema(description = "비밀번호", example = "password12#")
-    private String password;
+//    @NotBlank(message = "비밀번호는 공백일 수 없습니다.")
+//    @Schema(description = "비밀번호", example = "password12#")
+//    private String password;
 
     @NotBlank(message = "휴대폰번호는 공백일 수 없습니다.")
     @Schema(description = "휴대폰번호", example = "010-1234-5678")
