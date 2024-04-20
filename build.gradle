@@ -26,6 +26,12 @@ allprojects {
 		mavenCentral()
 	}
 
+	configurations {
+		compileOnly {
+			extendsFrom annotationProcessor
+		}
+	}
+
 }
 
 subprojects {
@@ -63,7 +69,24 @@ subprojects {
 		// lombok
 		compileOnly 'org.projectlombok:lombok'
 		annotationProcessor 'org.projectlombok:lombok'
+
+		// querydsl
+		implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
+		annotationProcessor 'com.querydsl:querydsl-apt:5.0.0:jakarta'
+		// querydsl Spring boot 3.x.x java.lang.NoClassDefFoundError
+		annotationProcessor 'jakarta.persistence:jakarta.persistence-api'
+		annotationProcessor 'jakarta.annotation:jakarta.annotation-api'
 	}
+
+	// Querydsl 빌드 옵션
+	def querydslDir = "build/generated/querydsl";
+	tasks.withType(JavaCompile) {
+		options.getGeneratedSourceOutputDirectory().set(file(querydslDir))
+	}
+	sourceSets {
+		main.java.srcDirs += [ querydslDir ]
+	}
+
 }
 
 project(":core_module") {
