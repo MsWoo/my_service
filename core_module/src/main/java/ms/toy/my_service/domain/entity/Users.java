@@ -11,6 +11,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import ms.toy.my_service.domain.dto.AdminEditDto;
+import ms.toy.my_service.domain.dto.UserEditDto;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -70,4 +72,9 @@ public class Users extends BaseEntity {
         this.loginLockTime = null;
     }
 
+    public void update(UserEditDto userEditDto, String userId) {
+        this.userName = userEditDto.getUserName();
+        this.phoneNumber = userEditDto.getPhoneNumber();
+        super.update(userId);
+    }
 }
