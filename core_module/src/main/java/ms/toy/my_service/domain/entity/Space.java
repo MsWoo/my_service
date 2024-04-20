@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import ms.toy.my_service.domain.dto.SpaceRequestDto;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -41,4 +42,11 @@ public class Space extends BaseEntity {
     @ColumnDefault("'N'")
     @Column(name = "deleteYn", length = 1)
     private String deleteYn;
+
+    public void update(SpaceRequestDto spaceRequestDto, String userId) {
+        this.spaceName = spaceRequestDto.getSpaceName();
+        this.spaceDescription = spaceRequestDto.getSpaceDescription();
+        this.capacity = spaceRequestDto.getCapacity();
+        super.update(userId);
+    }
 }
