@@ -8,7 +8,9 @@ import ms.toy.my_service.domain.entity.Admin;
 import ms.toy.my_service.domain.entity.Authority;
 import ms.toy.my_service.enums.ErrorCode;
 import ms.toy.my_service.enums.Role;
+import ms.toy.my_service.enums.SiteType;
 import ms.toy.my_service.jwt.CustomDetailsSerivce;
+import ms.toy.my_service.jwt.MemberInfo;
 import ms.toy.my_service.repository.AdminRepository;
 import ms.toy.my_service.repository.AuthorityRepository;
 import org.springframework.http.HttpStatus;
@@ -22,7 +24,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 @Component
 @RequiredArgsConstructor
-public class CustomUserDetailsService implements CustomDetailsSerivce {
+public class CustomAdminDetailsService implements CustomDetailsSerivce {
 
     private final PasswordEncoder passwordEncoder;
     private final AdminRepository adminRepository;
@@ -55,11 +57,12 @@ public class CustomUserDetailsService implements CustomDetailsSerivce {
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
         grantedAuthorities.add(new SimpleGrantedAuthority(role.getAuthority()));
 
-        User user = new User(
+        User user = new MemberInfo(
                 admin.getUserId(),
-                "",
-                grantedAuthorities
-        );
+                grantedAuthorities,
+                admin,
+                SiteType.ADMIN
+                );
 
         return user;
     }

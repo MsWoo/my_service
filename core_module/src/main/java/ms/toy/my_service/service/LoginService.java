@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import ms.toy.my_service.domain.dto.LoginDto;
 import ms.toy.my_service.domain.dto.TokenDto;
 import ms.toy.my_service.domain.entity.TokenInfo;
+import ms.toy.my_service.jwt.MemberInfo;
 import ms.toy.my_service.jwt.TokenProvider;
 import ms.toy.my_service.util.CookieUtil;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -26,7 +27,9 @@ public class LoginService {
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        TokenDto tokenDto = tokenProvider.generateToken(authentication);
+        MemberInfo memberInfo = (MemberInfo) authentication.getPrincipal();
+
+        TokenDto tokenDto = tokenProvider.generateToken(memberInfo);
 
         CookieUtil.generateCookie(response, "accessToken", tokenDto.getAccessToken());
 

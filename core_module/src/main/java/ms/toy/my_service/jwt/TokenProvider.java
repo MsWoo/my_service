@@ -16,7 +16,9 @@ import java.util.stream.Collectors;
 import javax.crypto.SecretKey;
 import lombok.extern.slf4j.Slf4j;
 import ms.toy.my_service.domain.dto.TokenDto;
-import ms.toy.my_service.domain.dto.UserInfo;
+import ms.toy.my_service.domain.entity.Admin;
+import ms.toy.my_service.domain.entity.Users;
+import ms.toy.my_service.enums.SiteType;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -42,23 +44,37 @@ public class TokenProvider {
         this.refreshExpirationTime = refreshExpirationTime;
     }
 
-    public TokenDto generateToken(Authentication authentication) {
+    public TokenDto generateToken(MemberInfo memberInfo) {
+        if (SiteType.ADMIN.equals(memberInfo.getSiteType())) {
+            Admin admin = (Admin) memberInfo.getMember();
+            return this.generateToken(memberInfo.getAuthorities(), memberInfo.getUsername(), admin.getId(), admin.getUserName());
+        } else {
+            Users user = (Users) memberInfo.getMember();
+            return this.generateToken(memberInfo.getAuthorities(), memberInfo.getUsername(), user.getId(), user.getUserName());
+        }
+    }
+
+    private TokenDto generateToken(Collection<? extends GrantedAuthority> permissions, String userId, Long id, String username) {
         Date now = new Date();
 
-        String authorities = authentication.getAuthorities().stream()
+        String authorities = permissions.stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
 
         String accessToken = Jwts.builder()
-                .setSubject(authentication.getName())
-                .claim("role", authorities)
+                .setSubject(userId)
+                .claim(JwtAttributes.MEMBERSEQ_KEY, id)
+                .claim(JwtAttributes.MEMBERNAME_KEY, username)
+                .claim(JwtAttributes.AUTHORITIES_KEY, authorities)
                 .signWith(this.secretKey, SignatureAlgorithm.HS512)
                 .setExpiration(new Date(now.getTime() + Long.parseLong(this.expirationTime)))
                 .compact();
 
         String refreshToken = Jwts.builder()
-                .setSubject(authentication.getName())
-                .claim("role", authorities)
+                .setSubject(userId)
+                .claim(JwtAttributes.MEMBERSEQ_KEY, id)
+                .claim(JwtAttributes.MEMBERNAME_KEY, username)
+                .claim(JwtAttributes.AUTHORITIES_KEY, authorities)
                 .signWith(this.secretKey, SignatureAlgorithm.HS512)
                 .setExpiration(new Date(now.getTime() + Long.parseLong(this.refreshExpirationTime)))
                 .compact();
@@ -75,14 +91,18 @@ public class TokenProvider {
 
         String accessToken = Jwts.builder()
                 .setSubject(claims.getSubject())
-                .claim("role", claims.get("role"))
+                .claim(JwtAttributes.MEMBERSEQ_KEY, claims.get(JwtAttributes.MEMBERSEQ_KEY))
+                .claim(JwtAttributes.MEMBERNAME_KEY, claims.get(JwtAttributes.MEMBERNAME_KEY))
+                .claim(JwtAttributes.AUTHORITIES_KEY, claims.get(JwtAttributes.AUTHORITIES_KEY))
                 .signWith(this.secretKey, SignatureAlgorithm.HS512)
                 .setExpiration(new Date(now.getTime() + Long.parseLong(this.expirationTime)))
                 .compact();
 
         String refreshToken = Jwts.builder()
                 .setSubject(claims.getSubject())
-                .claim("role", claims.get("role"))
+                .claim(JwtAttributes.MEMBERSEQ_KEY, claims.get(JwtAttributes.MEMBERSEQ_KEY))
+                .claim(JwtAttributes.MEMBERNAME_KEY, claims.get(JwtAttributes.MEMBERNAME_KEY))
+                .claim(JwtAttributes.AUTHORITIES_KEY, claims.get(JwtAttributes.AUTHORITIES_KEY))
                 .signWith(this.secretKey, SignatureAlgorithm.HS512)
                 .setExpiration(new Date(now.getTime() + Long.parseLong(this.refreshExpirationTime)))
                 .compact();
@@ -108,8 +128,8 @@ public class TokenProvider {
     }
 
     public String resolveToken(HttpServletRequest request) {
-        String bearerToken = request.getHeader("Authorization");
-        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
+        String bearerToken = request.getHeader(JwtAttributes.AUTHORIZATION);
+        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(JwtAttributes.BEARER_PREFIX)) {
             return bearerToken.substring(7);
         }
         return null;
@@ -122,16 +142,21 @@ public class TokenProvider {
                 .parseClaimsJws(token)
                 .getBody();
 
-        Object authoritiesCliam = claims.get("role");
+        Object authoritiesCliam = claims.get(JwtAttributes.AUTHORITIES_KEY);
 
         Collection<? extends GrantedAuthority> authorities = (authoritiesCliam == null) ?
-                AuthorityUtils.NO_AUTHORITIES : AuthorityUtils.commaSeparatedStringToAuthorityList(claims.get("role").toString());
+                AuthorityUtils.NO_AUTHORITIES
+                : AuthorityUtils.commaSeparatedStringToAuthorityList(claims.get(JwtAttributes.AUTHORITIES_KEY).toString());
 
-        // 로그인 API 제외 모든 요청을 거치는 JWT 필터에서 SecurityContextHolder에 설정할 Authentication 객체에 principal로 userInfo 넣어준다.
-        // 컨트롤러에서 @AuthenticationPrincipal 어노테이션을 통해 해당 userInfo 객체를 가져와서 사용 가능하다.
-        UserInfo userInfo = new UserInfo(claims.getSubject(), "", authorities);
+        // 컨트롤러에서 @AuthenticationPrincipal 어노테이션을 통해 해당 memberInfo 객체를 가져와서 사용 가능하다.
+//        MemberInfo memberInfo = new MemberInfo(claims.getSubject(), authorities);
+        MemberInfo memberInfo = new MemberInfo(
+                claims.getSubject(),
+                authorities,
+                (Integer) claims.get(JwtAttributes.MEMBERSEQ_KEY),
+                String.valueOf(claims.get(JwtAttributes.MEMBERNAME_KEY)));
 
-        return new UsernamePasswordAuthenticationToken(userInfo, token, authorities);
+        return new UsernamePasswordAuthenticationToken(memberInfo, token, authorities);
     }
 
     public Claims getClaims(String token) {
