@@ -6,6 +6,7 @@ import ms.toy.my_service.domain.dto.*;
 import ms.toy.my_service.domain.entity.Admin;
 import ms.toy.my_service.domain.entity.Users;
 import ms.toy.my_service.enums.ErrorCode;
+import ms.toy.my_service.jwt.MemberInfo;
 import ms.toy.my_service.mapper.UserMapper;
 import ms.toy.my_service.repository.UserRepository;
 import ms.toy.my_service.repository.search.UserSearchCondition;
@@ -51,11 +52,11 @@ public class UserService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public UserDto editUser(Long id, UserEditDto userEditDto, UserInfo userInfo) {
+    public UserDto editUser(Long id, UserEditDto userEditDto, MemberInfo memberInfo) {
         Users user = userRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.OK, ErrorCode.EMPTY_DATA.name()));
 
-        user.update(userEditDto, userInfo.getUserId());
+        user.update(userEditDto, memberInfo.getUsername());
 
         return UserDto.builder().id(id).build();
     }

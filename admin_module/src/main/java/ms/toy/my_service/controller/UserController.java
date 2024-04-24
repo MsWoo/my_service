@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import ms.toy.my_service.domain.dto.*;
+import ms.toy.my_service.jwt.MemberInfo;
 import ms.toy.my_service.repository.search.UserSearchCondition;
 import ms.toy.my_service.service.UserService;
 import org.springdoc.core.annotations.ParameterObject;
@@ -63,8 +64,8 @@ public class UserController {
     public ResponseEntity<Object> editUser(
             @Parameter(description = "이용자 ID") @PathVariable Long id,
             @Parameter @RequestBody UserEditDto userEditDto,
-            @AuthenticationPrincipal UserInfo userInfo) {
-        return ResponseEntity.ok(userService.editUser(id, userEditDto, userInfo));
+            @AuthenticationPrincipal MemberInfo memberInfo) {
+        return ResponseEntity.ok(userService.editUser(id, userEditDto, memberInfo));
     }
 
 }
