@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import ms.toy.my_service.domain.dto.CommonPageDto;
 import ms.toy.my_service.domain.dto.SpaceDto;
 import ms.toy.my_service.domain.dto.SpaceRequestDto;
-import ms.toy.my_service.domain.dto.UserInfo;
+import ms.toy.my_service.jwt.MemberInfo;
 import ms.toy.my_service.domain.entity.Space;
 import ms.toy.my_service.enums.ErrorCode;
 import ms.toy.my_service.mapper.SpaceMapper;
@@ -46,12 +46,12 @@ public class SpaceService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public SpaceDto saveSpace(SpaceRequestDto spaceRequestDto) {
+    public SpaceDto saveSpace(SpaceRequestDto spaceRequestDto, MemberInfo memberInfo) {
         if (spaceRepository.existsBySpaceName(spaceRequestDto.getSpaceName())) {
             throw new ResponseStatusException(HttpStatus.OK, ErrorCode.DUPLICATE_ID.name());
         }
 
-        Space space = spaceMapper.toEntity(spaceRequestDto);
+        Space space = spaceMapper.toEntity(spaceRequestDto, memberInfo.getUsername());
 
         Long id = spaceRepository.save(space).getId();
 
@@ -65,11 +65,11 @@ public class SpaceService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public SpaceDto editSpace(Long id, SpaceRequestDto spaceRequestDto, UserInfo userInfo) {
+    public SpaceDto editSpace(Long id, SpaceRequestDto spaceRequestDto, MemberInfo memberInfo) {
         Space space = spaceRepository.findById(id).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.OK, ErrorCode.EMPTY_DATA.name()));
 
-        space.update(spaceRequestDto, userInfo.getUserId());
+        space.update(spaceRequestDto, memberInfo.getUsername());
         return SpaceDto.builder().id(id).build();
     }
 }

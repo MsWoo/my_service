@@ -13,6 +13,7 @@ public class SpaceDto {
     private String spaceName;
     private String spaceDescription;
     private Integer capacity;
+    private String useYn;
     private String createdBy;
     private String updatedBy;
     private LocalDateTime createdAt;

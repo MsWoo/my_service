@@ -39,14 +39,19 @@ public class Space extends BaseEntity {
     @Column(name = "capacity", nullable = false)
     private Integer capacity;
 
+    @Column(name = "useYn", nullable = false, length = 1)
+    private String useYn;
+
     @ColumnDefault("'N'")
     @Column(name = "deleteYn", length = 1)
     private String deleteYn;
+
 
     public void update(SpaceRequestDto spaceRequestDto, String userId) {
         this.spaceName = spaceRequestDto.getSpaceName();
         this.spaceDescription = spaceRequestDto.getSpaceDescription();
         this.capacity = spaceRequestDto.getCapacity();
+        this.useYn = spaceRequestDto.getUseYn();
         super.update(userId);
     }
 }

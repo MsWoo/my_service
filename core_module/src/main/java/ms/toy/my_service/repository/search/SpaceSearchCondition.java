@@ -5,4 +5,5 @@ import lombok.Data;
 @Data
 public class SpaceSearchCondition extends SearchCondition {
     private String spaceName;
+    private String useYn;
 }

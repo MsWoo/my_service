@@ -45,7 +45,11 @@ public class SpaceSearchRepositoryImpl extends QuerydslRepositorySupport impleme
         BooleanBuilder booleanBuilder = new BooleanBuilder();
 
         if (StringUtils.hasText(searchCondition.getSpaceName())) {
-            booleanBuilder.and(space.spaceName.eq(searchCondition.getSpaceName()));
+            booleanBuilder.and(space.spaceName.contains(searchCondition.getSpaceName()));
+        }
+
+        if (StringUtils.hasText(searchCondition.getUseYn())) {
+            booleanBuilder.and(space.useYn.eq(searchCondition.getUseYn()));
         }
 
         return booleanBuilder;

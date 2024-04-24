@@ -13,7 +13,7 @@ import ms.toy.my_service.domain.dto.CommonPageDto;
 import ms.toy.my_service.domain.dto.ErrorResponse;
 import ms.toy.my_service.domain.dto.SpaceDto;
 import ms.toy.my_service.domain.dto.SpaceRequestDto;
-import ms.toy.my_service.domain.dto.UserInfo;
+import ms.toy.my_service.jwt.MemberInfo;
 import ms.toy.my_service.repository.search.SpaceSearchCondition;
 import ms.toy.my_service.service.SpaceService;
 import org.springdoc.core.annotations.ParameterObject;
@@ -63,8 +63,10 @@ public class SpaceController {
             @ApiResponse(responseCode = "500", description = "FAIL", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
     @PostMapping("/save")
-    public ResponseEntity<Object> saveSpace(@Parameter @Valid @RequestBody SpaceRequestDto spaceRequestDto) {
-        return ResponseEntity.ok(spaceService.saveSpace(spaceRequestDto));
+    public ResponseEntity<Object> saveSpace(@Parameter @Valid @RequestBody SpaceRequestDto spaceRequestDto,
+            @AuthenticationPrincipal MemberInfo memberInfo
+    ) {
+        return ResponseEntity.ok(spaceService.saveSpace(spaceRequestDto, memberInfo));
     }
 
     @Operation(summary = "공간 삭제", description = "기존 공간을 삭제합니다.")
@@ -86,7 +88,7 @@ public class SpaceController {
     public ResponseEntity<Object> editAdmin(
             @Parameter(description = "공간 ID") @PathVariable Long id,
             @Parameter @RequestBody SpaceRequestDto spaceRequestDto,
-            @AuthenticationPrincipal UserInfo userInfo) {
-        return ResponseEntity.ok(spaceService.editSpace(id, spaceRequestDto, userInfo));
+            @AuthenticationPrincipal MemberInfo memberInfo) {
+        return ResponseEntity.ok(spaceService.editSpace(id, spaceRequestDto, memberInfo));
     }
 }

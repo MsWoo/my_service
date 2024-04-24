@@ -17,4 +17,8 @@ public class SpaceRequestDto {
     @NotNull(message = "수용 인원은 공백일 수 없습니다.")
     @Schema(description = "수용 인원", example = "6")
     private Integer capacity;
+
+    @NotBlank(message = "공간 사용 여부는 공백일 수 없습니다.")
+    @Schema(description = "공간 사용 여부", example = "Y")
+    private String useYn;
 }
