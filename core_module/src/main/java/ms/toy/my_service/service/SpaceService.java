@@ -48,7 +48,7 @@ public class SpaceService {
     @Transactional(rollbackFor = Exception.class)
     public SpaceDto saveSpace(SpaceRequestDto spaceRequestDto, MemberInfo memberInfo) {
         if (spaceRepository.existsBySpaceName(spaceRequestDto.getSpaceName())) {
-            throw new ResponseStatusException(HttpStatus.OK, ErrorCode.DUPLICATE_ID.name());
+            throw new ResponseStatusException(HttpStatus.OK, ErrorCode.DUPLICATE_SPACE_NAME.name());
         }
 
         Space space = spaceMapper.toEntity(spaceRequestDto, memberInfo.getUsername());
