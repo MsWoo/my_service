@@ -7,11 +7,13 @@ import ms.toy.my_service.domain.dto.AdminJoinDto;
 import ms.toy.my_service.domain.dto.AdminListDto;
 import ms.toy.my_service.domain.entity.Admin;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 @Mapper(config = MapstructConfig.class)
 public interface AdminMapper {
 
-    Admin toEntity(AdminJoinDto adminJoinDto);
+    @Mapping(source = "userId", target = "createdBy")
+    Admin toEntity(AdminJoinDto adminJoinDto, String userId);
 
     AdminDto toDto(Admin entity);
 

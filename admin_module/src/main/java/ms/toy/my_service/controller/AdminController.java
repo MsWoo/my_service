@@ -14,14 +14,12 @@ import ms.toy.my_service.domain.dto.AdminDto;
 import ms.toy.my_service.domain.dto.AdminEditDto;
 import ms.toy.my_service.domain.dto.AdminJoinDto;
 import ms.toy.my_service.domain.dto.ErrorResponse;
-import ms.toy.my_service.domain.dto.UserInfo;
+import ms.toy.my_service.jwt.MemberInfo;
 import ms.toy.my_service.repository.search.AdminSearchCondition;
-import ms.toy.my_service.repository.search.UserSearchCondition;
 import ms.toy.my_service.service.AdminService;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "Admin", description = "관리자 관리 Rest API")
@@ -59,8 +57,11 @@ public class AdminController {
             @ApiResponse(responseCode = "500", description = "FAIL", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
     @PostMapping("/join")
-    public ResponseEntity<Object> joinAdmin(@Parameter @Valid @RequestBody AdminJoinDto adminJoinDto) {
-        return ResponseEntity.ok(adminService.joinAdmin(adminJoinDto));
+    public ResponseEntity<Object> joinAdmin(
+            @Parameter @Valid @RequestBody AdminJoinDto adminJoinDto,
+            @AuthenticationPrincipal MemberInfo memberInfo
+    ) {
+        return ResponseEntity.ok(adminService.joinAdmin(adminJoinDto, memberInfo));
     }
 
     @Operation(summary = "관리자 삭제", description = "기존 관리자를 삭제합니다.")
@@ -82,8 +83,8 @@ public class AdminController {
     public ResponseEntity<Object> editAdmin(
             @Parameter(description = "관리자 ID") @PathVariable Long id,
             @Parameter @RequestBody AdminEditDto adminEditDto,
-            @AuthenticationPrincipal UserInfo userInfo) {
-        return ResponseEntity.ok(adminService.editAdmin(id, adminEditDto, userInfo));
+            @AuthenticationPrincipal MemberInfo memberInfo) {
+        return ResponseEntity.ok(adminService.editAdmin(id, adminEditDto, memberInfo));
     }
 
 }

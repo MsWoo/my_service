@@ -4,17 +4,14 @@ import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import java.util.List;
 import ms.toy.my_service.domain.entity.Admin;
 import ms.toy.my_service.domain.entity.QAdmin;
-import ms.toy.my_service.domain.entity.QUsers;
-import ms.toy.my_service.domain.entity.Users;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.util.StringUtils;
-
-import java.util.List;
 
 public class AdminSearchRepositoryImpl extends QuerydslRepositorySupport implements AdminSearchRepository {
     private final JPAQueryFactory queryFactory;
@@ -46,11 +43,11 @@ public class AdminSearchRepositoryImpl extends QuerydslRepositorySupport impleme
         BooleanBuilder booleanBuilder = new BooleanBuilder();
 
         if (StringUtils.hasText(adminSearchCondition.getUserId())) {
-            booleanBuilder.and(admin.userId.eq(adminSearchCondition.getUserId()));
+            booleanBuilder.and(admin.userId.contains(adminSearchCondition.getUserId()));
         }
 
         if (StringUtils.hasText(adminSearchCondition.getUserName())) {
-            booleanBuilder.and(admin.userName.eq(adminSearchCondition.getUserName()));
+            booleanBuilder.and(admin.userName.contains(adminSearchCondition.getUserName()));
         }
 
         return booleanBuilder;

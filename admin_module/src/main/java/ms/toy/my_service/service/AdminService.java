@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import ms.toy.my_service.domain.dto.*;
 import ms.toy.my_service.domain.entity.Admin;
 import ms.toy.my_service.enums.ErrorCode;
+import ms.toy.my_service.jwt.MemberInfo;
 import ms.toy.my_service.mapper.AdminMapper;
 import ms.toy.my_service.repository.AdminRepository;
 import ms.toy.my_service.repository.search.AdminSearchCondition;
@@ -45,15 +46,14 @@ public class AdminService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public AdminDto joinAdmin(AdminJoinDto adminJoinDto) {
+    public AdminDto joinAdmin(AdminJoinDto adminJoinDto, MemberInfo memberInfo) {
         if (adminRepository.existsByUserId(adminJoinDto.getUserId())) {
             throw new ResponseStatusException(HttpStatus.OK, ErrorCode.DUPLICATE_ID.name());
         }
 
-        Admin admin = adminMapper.toEntity(adminJoinDto);
+        Admin admin = adminMapper.toEntity(adminJoinDto, memberInfo.getUsername());
         admin.setAuthorityId(2L);
         admin.setPassword(passwordEncoder.encode("1234"));
-        admin.setCreatedBy(adminJoinDto.getUserId());
 
         Long id = adminRepository.save(admin).getId();
 
@@ -67,11 +67,11 @@ public class AdminService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public AdminDto editAdmin(Long id, AdminEditDto adminEditDto, UserInfo userInfo) {
+    public AdminDto editAdmin(Long id, AdminEditDto adminEditDto, MemberInfo memberInfo) {
         Admin admin = adminRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.OK, ErrorCode.EMPTY_DATA.name()));
 
-        admin.update(adminEditDto, userInfo.getUserId());
+        admin.update(adminEditDto, memberInfo.getUsername());
 
         return AdminDto.builder().id(id).build();
     }
