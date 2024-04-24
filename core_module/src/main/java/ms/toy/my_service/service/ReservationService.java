@@ -3,6 +3,7 @@ package ms.toy.my_service.service;
 import java.time.LocalDate;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import ms.toy.my_service.aop.DistributedLock;
 import ms.toy.my_service.domain.dto.CommonPageDto;
 import ms.toy.my_service.domain.dto.ReservationDto;
@@ -24,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.server.ResponseStatusException;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ReservationService {

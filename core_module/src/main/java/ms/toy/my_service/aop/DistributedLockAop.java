@@ -23,7 +23,7 @@ public class DistributedLockAop {
     private final AopForTransaction aopForTransaction;
 
     @Around("@annotation(ms.toy.my_service.aop.DistributedLock)")
-    public Object lock(final ProceedingJoinPoint joinPoint) {
+    public Object lock(final ProceedingJoinPoint joinPoint) throws Throwable {
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Method method = signature.getMethod();
         DistributedLock distributedLock = method.getAnnotation(DistributedLock.class);
