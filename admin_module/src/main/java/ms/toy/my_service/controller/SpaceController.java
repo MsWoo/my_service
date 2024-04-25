@@ -75,8 +75,10 @@ public class SpaceController {
             @ApiResponse(responseCode = "500", description = "FAIL", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteAdmin(@Parameter(description = "공간 ID") @PathVariable Long id) {
-        return ResponseEntity.ok(spaceService.deleteSpace(id));
+    public ResponseEntity<Object> deleteAdmin(
+            @Parameter(description = "공간 ID") @PathVariable Long id,
+            @AuthenticationPrincipal MemberInfo memberInfo) {
+        return ResponseEntity.ok(spaceService.deleteSpace(id, memberInfo));
     }
 
     @Operation(summary = "공간 수정", description = "기존 공간 정보을 수정합니다.")

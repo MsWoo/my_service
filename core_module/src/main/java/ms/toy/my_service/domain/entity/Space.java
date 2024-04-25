@@ -54,4 +54,9 @@ public class Space extends BaseEntity {
         this.useYn = spaceRequestDto.getUseYn();
         super.update(userId);
     }
+
+    public void delete(String userId){
+        this.deleteYn = "Y";
+        super.update(userId);
+    }
 }

@@ -59,8 +59,12 @@ public class SpaceService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public SpaceDto deleteSpace(Long id) {
-        spaceRepository.deleteById(id);
+    public SpaceDto deleteSpace(Long id, MemberInfo memberInfo) {
+        Space space = spaceRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.OK, ErrorCode.EMPTY_DATA.name()));
+
+        space.delete(memberInfo.getUsername());
+
         return SpaceDto.builder().id(id).build();
     }
 
