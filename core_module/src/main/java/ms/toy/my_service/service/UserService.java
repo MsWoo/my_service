@@ -47,8 +47,12 @@ public class UserService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public UserDto deleteUser(Long id) {
-        userRepository.deleteById(id);
+    public UserDto deleteUser(Long id, MemberInfo memberInfo) {
+        Users user = userRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.OK, ErrorCode.EMPTY_DATA.name()));
+
+        user.delete(memberInfo.getUsername());
+
         return UserDto.builder().id(id).build();
     }
 

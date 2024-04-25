@@ -61,8 +61,10 @@ public class UserController {
             @ApiResponse(responseCode = "500", description = "FAIL", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteUser(@Parameter(description = "이용자 ID") @PathVariable Long id) {
-        return ResponseEntity.ok(userService.deleteUser(id));
+    public ResponseEntity<Object> deleteUser(
+            @Parameter(description = "이용자 ID") @PathVariable Long id,
+            @AuthenticationPrincipal MemberInfo memberInfo) {
+        return ResponseEntity.ok(userService.deleteUser(id, memberInfo));
     }
 
     @Operation(summary = "이용자 수정", description = "기존 이용자 정보를 수정합니다.")

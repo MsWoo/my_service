@@ -8,12 +8,11 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+
 import java.util.List;
+
 import lombok.RequiredArgsConstructor;
-import ms.toy.my_service.domain.dto.AdminDto;
-import ms.toy.my_service.domain.dto.AdminEditDto;
-import ms.toy.my_service.domain.dto.AdminJoinDto;
-import ms.toy.my_service.domain.dto.ErrorResponse;
+import ms.toy.my_service.domain.dto.*;
 import ms.toy.my_service.jwt.MemberInfo;
 import ms.toy.my_service.repository.search.AdminSearchCondition;
 import ms.toy.my_service.service.AdminService;
@@ -78,8 +77,10 @@ public class AdminController {
             @ApiResponse(responseCode = "500", description = "FAIL", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteAdmin(@Parameter(description = "관리자 ID") @PathVariable Long id) {
-        return ResponseEntity.ok(adminService.deleteAdmin(id));
+    public ResponseEntity<Object> deleteAdmin(
+            @Parameter(description = "관리자 ID") @PathVariable Long id,
+            @AuthenticationPrincipal MemberInfo memberInfo) {
+        return ResponseEntity.ok(adminService.deleteAdmin(id, memberInfo));
     }
 
     @Operation(summary = "관리자 수정", description = "기존 관리자 정보를 수정합니다.")

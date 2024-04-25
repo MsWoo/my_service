@@ -35,6 +35,11 @@ public class CustomAdminDetailsService implements CustomDetailsSerivce {
         Admin admin = adminRepository.findByUserId(username)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.OK, ErrorCode.EMPTY_DATA.name()));
 
+        // 아이디 삭제여부 유효성 체크
+        if(admin.getDeleteYn().equals("Y")){
+            throw new ResponseStatusException(HttpStatus.OK, ErrorCode.DELETED_ID.name());
+        }
+
         // 로그인 잠김 유효성 체크
         if (admin.getLoginLockTime() != null && admin.getLoginLockTime().isAfter(LocalDateTime.now())) {
             throw new ResponseStatusException(HttpStatus.OK, ErrorCode.LOGIN_LOCK.name());

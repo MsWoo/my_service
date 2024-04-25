@@ -1,12 +1,6 @@
 package ms.toy.my_service.domain.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import java.time.LocalDateTime;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,6 +9,8 @@ import ms.toy.my_service.domain.dto.AdminEditDto;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "admin")
@@ -74,6 +70,11 @@ public class Admin extends BaseEntity {
     public void update(AdminEditDto adminEditDto, String userId) {
         this.userName = adminEditDto.getUserName();
         this.phoneNumber = adminEditDto.getPhoneNumber();
+        super.update(userId);
+    }
+
+    public void delete(String userId){
+        this.deleteYn = "Y";
         super.update(userId);
     }
 }

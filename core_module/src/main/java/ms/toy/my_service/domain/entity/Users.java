@@ -76,4 +76,8 @@ public class Users extends BaseEntity {
         this.phoneNumber = userEditDto.getPhoneNumber();
         super.update(userId);
     }
+    public void delete(String userId){
+        this.deleteYn = "Y";
+        super.update(userId);
+    }
 }

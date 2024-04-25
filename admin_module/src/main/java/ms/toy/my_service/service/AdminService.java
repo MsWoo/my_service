@@ -2,11 +2,7 @@ package ms.toy.my_service.service;
 
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
-import ms.toy.my_service.domain.dto.AdminDetailDto;
-import ms.toy.my_service.domain.dto.AdminDto;
-import ms.toy.my_service.domain.dto.AdminEditDto;
-import ms.toy.my_service.domain.dto.AdminJoinDto;
-import ms.toy.my_service.domain.dto.CommonPageDto;
+import ms.toy.my_service.domain.dto.*;
 import ms.toy.my_service.domain.entity.Admin;
 import ms.toy.my_service.enums.ErrorCode;
 import ms.toy.my_service.jwt.MemberInfo;
@@ -64,8 +60,12 @@ public class AdminService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public AdminDto deleteAdmin(Long id) {
-        adminRepository.deleteById(id);
+    public AdminDto deleteAdmin(Long id, MemberInfo memberInfo) {
+        Admin admin = adminRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.OK, ErrorCode.EMPTY_DATA.name()));
+
+        admin.delete(memberInfo.getUsername());
+
         return AdminDto.builder().id(id).build();
     }
 
