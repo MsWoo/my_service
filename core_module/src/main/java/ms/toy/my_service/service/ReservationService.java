@@ -1,6 +1,8 @@
 package ms.toy.my_service.service;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -55,30 +57,37 @@ public class ReservationService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    @DistributedLock(key = "#reservationRequestDto.getReservationDate().concat('-').concat(#reservationRequestDto.getSpaceId())")
+    // todo Redisson Key 값 변경 필요
+    @DistributedLock(key = "#reservationRequestDto.getSpaceId()")
+//    @DistributedLock(key = "#reservationRequestDto.getReservationDate().concat('-').concat(#reservationRequestDto.getSpaceId())")
     public ReservationDto saveReservation(ReservationRequestDto reservationRequestDto, SiteType siteType, MemberInfo memberInfo) {
         // 날짜 유효성 검증
-        LocalDate now = LocalDate.now();
-        LocalDate reservationDate = LocalDate.parse(reservationRequestDto.getReservationDate());
-        if (reservationDate.isBefore(now)) {
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime startDt = LocalDateTime.parse(reservationRequestDto.getReservationStartDt(), formatter);
+        LocalDateTime endDt = LocalDateTime.parse(reservationRequestDto.getReservationEndDt(), formatter);
+        if (startDt.isBefore(now) || startDt.isAfter(endDt)) {
             throw new ResponseStatusException(HttpStatus.OK, ErrorCode.NOT_VALID_DATE.name());
         }
 
-        // 공간 사용 여부 유효성 검증
+        // 공간 사용 및 삭제 여부 유효성 검증
         Space space = spaceRepository.findById(Long.valueOf(reservationRequestDto.getSpaceId()))
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.OK,ErrorCode.EMPTY_DATA.name()));
         if ("N".equals(space.getUseYn())) {
             throw new ResponseStatusException(HttpStatus.OK, ErrorCode.UNUSABLE_SPACE.name());
         }
+        if ("Y".equals(space.getDeleteYn())) {
+            throw new ResponseStatusException(HttpStatus.OK, ErrorCode.DELETED_SPACE.name());
+        }
 
         // 공간 예약 가능 여부 유효성 검증
-        Reservation checkReservation = reservationRepository.findBySpaceIdAndReservationDate(reservationRequestDto.getSpaceId(), reservationDate);
-        if (!ObjectUtils.isEmpty(checkReservation)) {
+        List<Reservation> checkReservationList = reservationRepository.findBySpaceIdAndStartDtAndEndDtBetween(reservationRequestDto.getSpaceId(), startDt, endDt);
+        if (!ObjectUtils.isEmpty(checkReservationList)) {
             throw new ResponseStatusException(HttpStatus.OK, ErrorCode.ALREADY_RESERVED_SPACE.name());
         }
 
         // 예약 엔티티 변환 및 초기 값 설정
-        Reservation reservation = reservationMapper.toEntity(reservationRequestDto, space, memberInfo);
+        Reservation reservation = reservationMapper.toEntity(reservationRequestDto, startDt, endDt, space, memberInfo);
         reservation.setStatus(ReservationStatus.ACCEPTED);
         reservation.setAdminYn((SiteType.ADMIN.equals(siteType)) ? "Y" : "N");
 

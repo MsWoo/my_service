@@ -11,9 +11,13 @@ public class ReservationRequestDto {
     @Schema(description = "공간 Seq", example = "1")
     private Integer spaceId;
 
-    @NotBlank(message = "예약일자는 공백일 수 없습니다.")
-    @Schema(description = "예약일자", example = "2024-04-23")
-    private String reservationDate;
+    @NotBlank(message = "예약 시작 일자는 공백일 수 없습니다.")
+    @Schema(description = "예약 시작 일자", example = "yyyy-MM-dd HH:mm:ss")
+    private String reservationStartDt;
+
+    @NotBlank(message = "예약 종료 일자는 공백일 수 없습니다.")
+    @Schema(description = "예약 종료 일자", example = "yyyy-MM-dd HH:mm:ss")
+    private String reservationEndDt;
 
     @NotNull(message = "참석 인원은 공백일 수 없습니다.")
     @Schema(description = "참석 인원", example = "6")

@@ -4,6 +4,7 @@ import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import java.time.LocalDateTime;
 import java.util.List;
 import ms.toy.my_service.domain.entity.QReservation;
 import ms.toy.my_service.domain.entity.Reservation;
@@ -59,7 +60,8 @@ public class ReservationSearchRepositoryImpl extends QuerydslRepositorySupport i
         }
 
         if (!ObjectUtils.isEmpty(searchCondition.getReservationDate())) {
-            booleanBuilder.and(reservation.reservationDate.eq(searchCondition.getReservationDate()));
+            // todo LocalDateTime 타입의 값에서. LocalDate를 비교가능한지.
+            booleanBuilder.and(reservation.reservationStartDt.eq(LocalDateTime.from(searchCondition.getReservationDate())));
         }
 
         return booleanBuilder;

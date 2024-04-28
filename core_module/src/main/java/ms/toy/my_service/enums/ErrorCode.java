@@ -28,6 +28,7 @@ public enum ErrorCode {
     // 공간 Space 4000
     DUPLICATE_SPACE_NAME("4000", "이미 등록된 공간명입니다."),
     UNUSABLE_SPACE("4001", "사용 불가능한 공간입니다."),
+    DELETED_SPACE("4002", "삭제된 공간입니다."),
 
     // 예약 Reservation 5000
     NOT_VALID_DATE("5000", "유효하지 않은 날짜입니다."),

@@ -1,7 +1,6 @@
 package ms.toy.my_service.domain.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import lombok.Builder;
 import lombok.Data;
@@ -16,7 +15,8 @@ public class ReservationDto {
     private Long spaceId;
     private Integer attendCount;
     private ReservationStatus status;
-    private LocalDate reservationDate;
+    private LocalDateTime reservationStartDt;
+    private LocalDateTime reservationEndDt;
     private String comment;
     private String adminYn;
     private String createdBy;
