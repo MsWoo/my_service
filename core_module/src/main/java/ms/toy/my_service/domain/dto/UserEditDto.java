@@ -2,7 +2,9 @@ package ms.toy.my_service.domain.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
+import lombok.Setter;
 
+@Setter
 @Getter
 public class UserEditDto {
     @Schema(description = "이름", example = "홍길동")
@@ -10,4 +12,7 @@ public class UserEditDto {
 
     @Schema(description = "휴대폰번호", example = "010-1234-5678")
     private String phoneNumber;
+
+    @Schema(description = "비밀번호", example = "password12#")
+    private String password;
 }

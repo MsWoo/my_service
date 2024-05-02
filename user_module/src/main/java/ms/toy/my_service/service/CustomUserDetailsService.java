@@ -8,7 +8,9 @@ import ms.toy.my_service.domain.entity.Authority;
 import ms.toy.my_service.domain.entity.Users;
 import ms.toy.my_service.enums.ErrorCode;
 import ms.toy.my_service.enums.Role;
+import ms.toy.my_service.enums.SiteType;
 import ms.toy.my_service.jwt.CustomDetailsSerivce;
+import ms.toy.my_service.jwt.MemberInfo;
 import ms.toy.my_service.repository.AuthorityRepository;
 import ms.toy.my_service.repository.UserRepository;
 import org.springframework.http.HttpStatus;
@@ -55,10 +57,11 @@ public class CustomUserDetailsService implements CustomDetailsSerivce {
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
         grantedAuthorities.add(new SimpleGrantedAuthority(role.getAuthority()));
 
-        User user = new User(
+        User user = new MemberInfo(
                 users.getUserId(),
-                "",
-                grantedAuthorities
+                grantedAuthorities,
+                users,
+                SiteType.USER
         );
 
         return user;
