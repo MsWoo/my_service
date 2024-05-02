@@ -57,9 +57,7 @@ public class ReservationService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    // todo Redisson Key 값 변경 필요
-    @DistributedLock(key = "#reservationRequestDto.getSpaceId()")
-//    @DistributedLock(key = "#reservationRequestDto.getReservationDate().concat('-').concat(#reservationRequestDto.getSpaceId())")
+    @DistributedLock(key = "#reservationRequestDto.getReservationDate().concat('-').concat(#reservationRequestDto.getSpaceId())")
     public ReservationDto saveReservation(ReservationRequestDto reservationRequestDto, SiteType siteType, MemberInfo memberInfo) {
         // 날짜 유효성 검증
         LocalDateTime now = LocalDateTime.now();

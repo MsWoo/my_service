@@ -11,6 +11,12 @@ public class ReservationRequestDto {
     @Schema(description = "공간 Seq", example = "1")
     private Integer spaceId;
 
+    // Redisson Lock에 사용할 key 필드
+    // Lock:reservationDate-spaceId
+    @NotBlank(message = "예약 일자는 공백일 수 없습니다.")
+    @Schema(description = "예약 일자", example = "yyyy-MM-dd")
+    private String reservationDate;
+
     @NotBlank(message = "예약 시작 일자는 공백일 수 없습니다.")
     @Schema(description = "예약 시작 일자", example = "yyyy-MM-dd HH:mm:ss")
     private String reservationStartDt;

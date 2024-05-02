@@ -60,8 +60,9 @@ public class ReservationSearchRepositoryImpl extends QuerydslRepositorySupport i
         }
 
         if (!ObjectUtils.isEmpty(searchCondition.getReservationDate())) {
-            // todo LocalDateTime 타입의 값에서. LocalDate를 비교가능한지.
-            booleanBuilder.and(reservation.reservationStartDt.eq(LocalDateTime.from(searchCondition.getReservationDate())));
+            LocalDateTime startOfDay = searchCondition.getReservationDate().atStartOfDay();
+            LocalDateTime endOfDay = searchCondition.getReservationDate().atTime(23, 59, 59);
+            booleanBuilder.and(reservation.reservationStartDt.goe(startOfDay)).and(reservation.reservationEndDt.loe(endOfDay));
         }
 
         return booleanBuilder;
