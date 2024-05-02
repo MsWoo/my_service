@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import ms.toy.my_service.domain.dto.*;
 import ms.toy.my_service.domain.entity.Admin;
 import ms.toy.my_service.enums.ErrorCode;
+import ms.toy.my_service.enums.Role;
 import ms.toy.my_service.jwt.MemberInfo;
 import ms.toy.my_service.mapper.AdminMapper;
 import ms.toy.my_service.repository.AdminRepository;
@@ -51,7 +52,7 @@ public class AdminService {
         }
 
         Admin admin = adminMapper.toEntity(adminJoinDto, memberInfo.getUsername());
-        admin.setAuthorityId(2L);
+        admin.setAuthorityId(Role.ADMIN.getAuthorityId());
         admin.setPassword(passwordEncoder.encode("1234"));
 
         Long id = adminRepository.save(admin).getId();

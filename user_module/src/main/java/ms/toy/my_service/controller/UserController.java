@@ -19,11 +19,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@Tag(name = "UsersMy", description = "이용자 회원가입 Rest API")
+@Tag(name = "Users", description = "이용자 Rest API")
 @RestController
 @RequestMapping("/api/v1/users")
 @RequiredArgsConstructor
-public class UserSignUpController {
+public class UserController {
 
     private final UserService userService;
 
@@ -33,11 +33,11 @@ public class UserSignUpController {
             @ApiResponse(responseCode = "500", description = "FAIL", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
     @PostMapping("/signup")
-    public ResponseEntity<Object> joinUserSignUp(
+    public ResponseEntity<Object> joinUser(
             @Parameter @Valid @RequestBody UserJoinDto userJoinDto,
             @AuthenticationPrincipal MemberInfo memberInfo
     ) {
-        return ResponseEntity.ok(userService.joinUserSignUp(userJoinDto, memberInfo));
+        return ResponseEntity.ok(userService.signUp(userJoinDto, memberInfo));
     }
 
 }

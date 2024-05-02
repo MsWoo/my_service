@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import ms.toy.my_service.domain.dto.*;
 import ms.toy.my_service.domain.entity.Users;
 import ms.toy.my_service.enums.ErrorCode;
+import ms.toy.my_service.enums.Role;
 import ms.toy.my_service.jwt.MemberInfo;
 import ms.toy.my_service.mapper.UserMapper;
 import ms.toy.my_service.repository.UserRepository;
@@ -94,13 +95,13 @@ public class UserService {
      * @return
      */
     @Transactional(rollbackFor = Exception.class)
-    public UserDto joinUserSignUp(UserJoinDto userJoinDto, MemberInfo memberInfo) {
+    public UserDto signUp(UserJoinDto userJoinDto, MemberInfo memberInfo) {
         if (userRepository.existsByUserId(userJoinDto.getUserId())) {
             throw new ResponseStatusException(HttpStatus.OK, ErrorCode.DUPLICATE_ID.name());
         }
 
         Users user = userMapper.toEntity(userJoinDto, memberInfo.getUsername());
-        user.setAuthorityId(1L);
+        user.setAuthorityId(Role.USER.getAuthorityId());
         user.setPassword(passwordEncoder.encode(userJoinDto.getPassword()));
 
         Long id = userRepository.save(user).getId();

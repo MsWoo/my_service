@@ -14,14 +14,4 @@ public class UserDto {
     private Long authorityId;
     private String userName;
     private String phoneNumber;
-
-//    public static UserDto toDto(Users entity) {
-//        return UserDto.builder()
-//                .id(entity.getId())
-//                .userId(entity.getUserId())
-//                .authorityId(entity.getAuthorityId())
-//                .userName(entity.getUserName())
-//                .phoneNumber(entity.getPhoneNumber())
-//                .build();
-//    }
 }
