@@ -12,7 +12,4 @@ public class UserEditDto {
 
     @Schema(description = "휴대폰번호", example = "010-1234-5678")
     private String phoneNumber;
-
-    @Schema(description = "비밀번호", example = "password12#")
-    private String password;
 }

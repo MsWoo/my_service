@@ -60,4 +60,10 @@ public class Reservation extends BaseEntity {
 
     @Column(name = "adminYn", length = 1)
     private String adminYn;
+
+
+    public void cancel(String userId) {
+        this.status = ReservationStatus.CANCELED;
+        super.update(userId);
+    }
 }

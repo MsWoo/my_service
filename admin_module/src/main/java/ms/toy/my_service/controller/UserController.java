@@ -17,6 +17,7 @@ import ms.toy.my_service.repository.search.UserSearchCondition;
 import ms.toy.my_service.service.UserService;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;

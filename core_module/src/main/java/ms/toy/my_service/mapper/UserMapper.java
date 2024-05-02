@@ -11,9 +11,7 @@ import org.mapstruct.Mapping;
 
 @Mapper(config = MapstructConfig.class)
 public interface UserMapper {
-
-
-    Users toEntity(UserJoinDto userJoinDto, String userId);
+    Users toEntity(UserJoinDto userJoinDto);
 
     UserDto toDto(Users entity);
 

@@ -8,6 +8,7 @@ import ms.toy.my_service.enums.ReservationStatus;
 public class ReservationSearchCondition extends SearchCondition {
     private Long userId;
     private Long spaceId;
-    private ReservationStatus status;
+    private String status;
     private LocalDate reservationDate;
+    private String adminYn;
 }

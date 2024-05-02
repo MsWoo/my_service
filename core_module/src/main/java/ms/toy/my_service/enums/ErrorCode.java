@@ -17,6 +17,7 @@ public enum ErrorCode {
     LOGIN_LOCK("1001", "로그인 5회 실패 시 5분동안 로그인이 제한됩니다."),
     DUPLICATE_ID("1003", "이미 등록된 ID입니다."),
     DELETED_ID("1004", "이미 삭제된 ID입니다."),
+    WRONG_PASSWORD("1005", "패스워드가 일치하지 않습니다."),
 
 
     // 관리자 Admin 2000

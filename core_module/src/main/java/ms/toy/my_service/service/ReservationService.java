@@ -35,7 +35,12 @@ public class ReservationService {
     private final SpaceRepository spaceRepository;
     private final ReservationMapper reservationMapper;
 
-    public CommonPageDto searchReservation(ReservationSearchCondition searchCondition) {
+    public CommonPageDto searchReservation(ReservationSearchCondition searchCondition, SiteType siteType, MemberInfo memberInfo) {
+        if (SiteType.USER.equals(siteType)) {
+            searchCondition.setUserId(Long.valueOf(memberInfo.getMemberSeq()));
+            searchCondition.setAdminYn("N");
+        }
+
         Page<Reservation> reservationPage = reservationRepository.searchReservation(searchCondition, searchCondition.getPageable());
 
         return CommonPageDto.builder()
@@ -49,9 +54,16 @@ public class ReservationService {
                 .build();
     }
 
-    public ReservationDto getReservationInfo(Long id) {
+    public ReservationDto getReservationInfo(Long id, SiteType siteType, MemberInfo memberInfo) {
         Reservation reservation = reservationRepository.findById(id).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.OK, ErrorCode.EMPTY_DATA.name()));
+
+        if (SiteType.USER.equals(siteType)) {
+            if ("N".equals(reservation.getAdminYn()) && !reservation.getUserId().equals(Long.valueOf(memberInfo.getMemberSeq()))) {
+                // todo CustomException 추가해서 문자열만 리턴하게
+                throw new ResponseStatusException(HttpStatus.OK, ErrorCode.EMPTY_DATA.name());
+            }
+        }
 
         return reservationMapper.toDto(reservation);
     }
@@ -92,5 +104,17 @@ public class ReservationService {
         Reservation savedReservation = reservationRepository.save(reservation);
 
         return reservationMapper.toDto(savedReservation);
+    }
+
+    public ReservationDto cancelReservation(Long id, SiteType siteType, MemberInfo memberInfo) {
+        Reservation reservation = reservationRepository.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.OK, ErrorCode.EMPTY_DATA.name()));
+
+        reservation.cancel(memberInfo.getUsername());
+
+        return reservationMapper.toDto(reservation);
+    }
+
+    public ReservationDto editReservation(Long id, ReservationRequestDto reservationRequestDto, SiteType siteType, MemberInfo memberInfo) {
     }
 }

@@ -47,7 +47,7 @@ public class UserService {
     }
 
     /**
-     * (관리자/이용자)
+     * (관리자/이용자) 이용자 상세 정보 확인
      * @param id
      * @return
      */
@@ -80,9 +80,6 @@ public class UserService {
         Users user = userRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.OK, ErrorCode.EMPTY_DATA.name()));
 
-        if(!ObjectUtils.isEmpty(userEditDto.getPassword())) {
-            userEditDto.setPassword(passwordEncoder.encode(userEditDto.getPassword()));
-        }
         user.update(userEditDto, memberInfo.getUsername());
 
         return UserDto.builder().id(id).build();
@@ -91,21 +88,35 @@ public class UserService {
     /**
      * 이용자 회원가입
      * @param userJoinDto
-     * @param memberInfo
      * @return
      */
     @Transactional(rollbackFor = Exception.class)
-    public UserDto signUp(UserJoinDto userJoinDto, MemberInfo memberInfo) {
+    public UserDto signUp(UserJoinDto userJoinDto) {
         if (userRepository.existsByUserId(userJoinDto.getUserId())) {
             throw new ResponseStatusException(HttpStatus.OK, ErrorCode.DUPLICATE_ID.name());
         }
 
-        Users user = userMapper.toEntity(userJoinDto, memberInfo.getUsername());
+        Users user = userMapper.toEntity(userJoinDto);
         user.setAuthorityId(Role.USER.getAuthorityId());
         user.setPassword(passwordEncoder.encode(userJoinDto.getPassword()));
+        user.setCreatedBy(user.getUserId());
 
         Long id = userRepository.save(user).getId();
 
         return UserDto.builder().id(id).build();
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public UserDto changePassword(PasswordChangeDto passwordChangeDto, MemberInfo memberInfo) {
+        Users user = userRepository.findById(Long.valueOf(memberInfo.getMemberSeq()))
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.OK, ErrorCode.EMPTY_DATA.name()));
+
+        if (!passwordEncoder.matches(passwordChangeDto.getPassword(), user.getPassword())) {
+            throw new ResponseStatusException(HttpStatus.OK, ErrorCode.WRONG_PASSWORD.name());
+        }
+
+        user.changePassword(passwordEncoder.encode(passwordChangeDto.getNewPassword()), memberInfo.getUsername());
+
+        return UserDto.builder().id(user.getId()).build();
     }
 }

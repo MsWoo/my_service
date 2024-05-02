@@ -48,6 +48,9 @@ public class ReservationSearchRepositoryImpl extends QuerydslRepositorySupport i
         BooleanBuilder booleanBuilder = new BooleanBuilder();
 
         if (!ObjectUtils.isEmpty(searchCondition.getUserId())) {
+            if (!ObjectUtils.isEmpty(searchCondition.getAdminYn())) {
+                booleanBuilder.and(reservation.adminYn.eq(searchCondition.getAdminYn()));
+            }
             booleanBuilder.and(reservation.userId.eq(searchCondition.getUserId()));
         }
 
@@ -55,8 +58,9 @@ public class ReservationSearchRepositoryImpl extends QuerydslRepositorySupport i
             booleanBuilder.and(reservation.space.id.eq(searchCondition.getSpaceId()));
         }
 
+        // todo Enum이라서 조건이 안걸리는 것 같음
         if (!ObjectUtils.isEmpty(searchCondition.getStatus())) {
-            booleanBuilder.and(reservation.status.eq(searchCondition.getStatus()));
+            booleanBuilder.and(reservation.status.stringValue().eq(searchCondition.getStatus()));
         }
 
         if (!ObjectUtils.isEmpty(searchCondition.getReservationDate())) {

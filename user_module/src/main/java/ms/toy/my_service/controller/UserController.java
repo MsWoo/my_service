@@ -33,11 +33,8 @@ public class UserController {
             @ApiResponse(responseCode = "500", description = "FAIL", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
     @PostMapping("/signup")
-    public ResponseEntity<Object> joinUser(
-            @Parameter @Valid @RequestBody UserJoinDto userJoinDto,
-            @AuthenticationPrincipal MemberInfo memberInfo
-    ) {
-        return ResponseEntity.ok(userService.signUp(userJoinDto, memberInfo));
+    public ResponseEntity<Object> joinUser(@Parameter @Valid @RequestBody UserJoinDto userJoinDto) {
+        return ResponseEntity.ok(userService.signUp(userJoinDto));
     }
 
 }

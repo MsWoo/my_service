@@ -74,11 +74,16 @@ public class Users extends BaseEntity {
     public void update(UserEditDto userEditDto, String userId) {
         this.userName = userEditDto.getUserName();
         this.phoneNumber = userEditDto.getPhoneNumber();
-        this.password = userEditDto.getPassword();
         super.update(userId);
     }
     public void delete(String userId){
         this.deleteYn = "Y";
         super.update(userId);
     }
+
+    public void changePassword(String password, String userId) {
+        this.password = password;
+        super.update(userId);
+    }
+
 }
