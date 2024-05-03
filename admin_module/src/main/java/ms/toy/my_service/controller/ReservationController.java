@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import ms.toy.my_service.domain.dto.CommonPageDto;
 import ms.toy.my_service.domain.dto.ErrorResponse;
 import ms.toy.my_service.domain.dto.ReservationDto;
+import ms.toy.my_service.domain.dto.ReservationEditDto;
 import ms.toy.my_service.domain.dto.ReservationRequestDto;
 import ms.toy.my_service.enums.SiteType;
 import ms.toy.my_service.jwt.MemberInfo;
@@ -99,9 +100,9 @@ public class ReservationController {
     @PutMapping("/{id}")
     public ResponseEntity<Object> editReservation(
             @Parameter(description = "예약 ID") @PathVariable Long id,
-            @Parameter @RequestBody ReservationRequestDto reservationRequestDto,
+            @Parameter @RequestBody ReservationEditDto reservationEditDto,
             @AuthenticationPrincipal MemberInfo memberInfo) {
-        return ResponseEntity.ok(reservationService.editReservation(id, reservationRequestDto, SiteType.ADMIN, memberInfo));
+        return ResponseEntity.ok(reservationService.editReservation(id, reservationEditDto, SiteType.ADMIN, memberInfo));
     }
 
 }
