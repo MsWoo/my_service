@@ -37,6 +37,7 @@ public class ReservationService {
     private final ReservationMapper reservationMapper;
 
     public CommonPageDto searchReservation(ReservationSearchCondition searchCondition, SiteType siteType, MemberInfo memberInfo) {
+        // 사용자 사이트의 경우 본인의 예약으로 필터링
         if (SiteType.USER.equals(siteType)) {
             searchCondition.setUserId(Long.valueOf(memberInfo.getMemberSeq()));
             searchCondition.setAdminYn("N");
@@ -59,6 +60,7 @@ public class ReservationService {
         Reservation reservation = reservationRepository.findById(id).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.OK, ErrorCode.EMPTY_DATA.name()));
 
+        // [사용자 사이트] 예약자 정보 유효성 검증
         if (SiteType.USER.equals(siteType)) {
             if ("N".equals(reservation.getAdminYn()) && !reservation.getUserId().equals(Long.valueOf(memberInfo.getMemberSeq()))) {
                 throw new ResponseStatusException(HttpStatus.OK, ErrorCode.USER_MISMATCH.name());
@@ -111,10 +113,16 @@ public class ReservationService {
         Reservation reservation = reservationRepository.findById(id).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.OK, ErrorCode.EMPTY_DATA.name()));
 
+        // [사용자 사이트] 예약자 정보 유효성 검증
         if (SiteType.USER.equals(siteType)) {
             if ("N".equals(reservation.getAdminYn()) && !reservation.getUserId().equals(Long.valueOf(memberInfo.getMemberSeq()))) {
                 throw new ResponseStatusException(HttpStatus.OK, ErrorCode.USER_MISMATCH.name());
             }
+        }
+
+        // 예약 상태 유효성 검증
+        if (ReservationStatus.CANCELED.equals(reservation.getStatus())) {
+            throw new ResponseStatusException(HttpStatus.OK, ErrorCode.CANCELED_RESERVATION.name());
         }
 
         reservation.cancel(memberInfo.getUsername());
@@ -124,14 +132,40 @@ public class ReservationService {
 
     @Transactional(rollbackFor = Exception.class)
     public ReservationDto editReservation(Long id, ReservationEditDto reservationEditDto, SiteType siteType, MemberInfo memberInfo) {
-        // todo 유효성 검증 필요 (날짜, 예약 가능 여부, 취소 상태, )
         Reservation reservation = reservationRepository.findById(id).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.OK, ErrorCode.EMPTY_DATA.name()));
 
+        // [사용자 사이트] 예약자 정보 유효성 검증
         if (SiteType.USER.equals(siteType)) {
             if ("N".equals(reservation.getAdminYn()) && !reservation.getUserId().equals(Long.valueOf(memberInfo.getMemberSeq()))) {
                 throw new ResponseStatusException(HttpStatus.OK, ErrorCode.USER_MISMATCH.name());
             }
+        }
+
+        // 예약 상태 유효성 검증
+        if (ReservationStatus.CANCELED.equals(reservation.getStatus())) {
+            throw new ResponseStatusException(HttpStatus.OK, ErrorCode.CANCELED_RESERVATION.name());
+        }
+
+        // 날짜 유효성 검증
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime startDt = LocalDateTime.parse(reservationEditDto.getReservationStartDt(), formatter);
+        LocalDateTime endDt = LocalDateTime.parse(reservationEditDto.getReservationEndDt(), formatter);
+        if (startDt.isBefore(now) || startDt.isAfter(endDt)) {
+            throw new ResponseStatusException(HttpStatus.OK, ErrorCode.NOT_VALID_DATE.name());
+        }
+
+        // 공간 예약 가능 여부 유효성 검증
+        Long spaceId = reservation.getSpace().getId();
+        List<Reservation> findCheckReservationList = reservationRepository.findBySpaceIdAndStartDtAndEndDtBetween(spaceId.intValue(), startDt, endDt);
+        List<Reservation> checkReservationList = findCheckReservationList.stream()
+                .filter(checkReservation -> ReservationStatus.ACCEPTED.equals(
+                        checkReservation.getStatus()))
+                .filter(checkReservation -> !checkReservation.equals(reservation))
+                .collect(Collectors.toList());
+        if (!ObjectUtils.isEmpty(checkReservationList)) {
+            throw new ResponseStatusException(HttpStatus.OK, ErrorCode.ALREADY_RESERVED_SPACE.name());
         }
 
         reservation.update(reservationEditDto, memberInfo.getUsername());

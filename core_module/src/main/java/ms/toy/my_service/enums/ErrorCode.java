@@ -35,6 +35,7 @@ public enum ErrorCode {
     NOT_VALID_DATE("5000", "유효하지 않은 날짜입니다."),
     ALREADY_RESERVED_SPACE("5001", "해당 날짜에 이미 예약 된 공간입니다."),
     USER_MISMATCH("5002", "예약자 정보가 불일치합니다."),
+    CANCELED_RESERVATION("5003", "취소된 예약입니다."),
     ;
 
     private String errorCode;
