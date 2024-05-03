@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import ms.toy.my_service.aop.DistributedLock;
 import ms.toy.my_service.domain.dto.CommonPageDto;
 import ms.toy.my_service.domain.dto.ReservationDto;
+import ms.toy.my_service.domain.dto.ReservationEditDto;
 import ms.toy.my_service.domain.dto.ReservationRequestDto;
 import ms.toy.my_service.domain.entity.Reservation;
 import ms.toy.my_service.domain.entity.Space;
@@ -60,8 +61,7 @@ public class ReservationService {
 
         if (SiteType.USER.equals(siteType)) {
             if ("N".equals(reservation.getAdminYn()) && !reservation.getUserId().equals(Long.valueOf(memberInfo.getMemberSeq()))) {
-                // todo CustomException 추가해서 문자열만 리턴하게
-                throw new ResponseStatusException(HttpStatus.OK, ErrorCode.EMPTY_DATA.name());
+                throw new ResponseStatusException(HttpStatus.OK, ErrorCode.USER_MISMATCH.name());
             }
         }
 
@@ -106,15 +106,36 @@ public class ReservationService {
         return reservationMapper.toDto(savedReservation);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public ReservationDto cancelReservation(Long id, SiteType siteType, MemberInfo memberInfo) {
         Reservation reservation = reservationRepository.findById(id).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.OK, ErrorCode.EMPTY_DATA.name()));
+
+        if (SiteType.USER.equals(siteType)) {
+            if ("N".equals(reservation.getAdminYn()) && !reservation.getUserId().equals(Long.valueOf(memberInfo.getMemberSeq()))) {
+                throw new ResponseStatusException(HttpStatus.OK, ErrorCode.USER_MISMATCH.name());
+            }
+        }
 
         reservation.cancel(memberInfo.getUsername());
 
         return reservationMapper.toDto(reservation);
     }
 
-    public ReservationDto editReservation(Long id, ReservationRequestDto reservationRequestDto, SiteType siteType, MemberInfo memberInfo) {
+    @Transactional(rollbackFor = Exception.class)
+    public ReservationDto editReservation(Long id, ReservationEditDto reservationEditDto, SiteType siteType, MemberInfo memberInfo) {
+        // todo 유효성 검증 필요 (날짜, 예약 가능 여부, 취소 상태, )
+        Reservation reservation = reservationRepository.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.OK, ErrorCode.EMPTY_DATA.name()));
+
+        if (SiteType.USER.equals(siteType)) {
+            if ("N".equals(reservation.getAdminYn()) && !reservation.getUserId().equals(Long.valueOf(memberInfo.getMemberSeq()))) {
+                throw new ResponseStatusException(HttpStatus.OK, ErrorCode.USER_MISMATCH.name());
+            }
+        }
+
+        reservation.update(reservationEditDto, memberInfo.getUsername());
+
+        return reservationMapper.toDto(reservation);
     }
 }

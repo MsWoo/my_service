@@ -12,10 +12,12 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import ms.toy.my_service.domain.dto.ReservationEditDto;
 import ms.toy.my_service.enums.ReservationStatus;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -66,4 +68,16 @@ public class Reservation extends BaseEntity {
         this.status = ReservationStatus.CANCELED;
         super.update(userId);
     }
+
+    public void update(ReservationEditDto reservationEditDto, String userId) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime startDt = LocalDateTime.parse(reservationEditDto.getReservationStartDt(), formatter);
+        LocalDateTime endDt = LocalDateTime.parse(reservationEditDto.getReservationEndDt(), formatter);
+        this.reservationStartDt = startDt;
+        this.reservationEndDt = endDt;
+        this.attendCount = reservationEditDto.getAttendCount();
+        this.comment = reservationEditDto.getComment();
+        super.update(userId);
+    }
+
 }
