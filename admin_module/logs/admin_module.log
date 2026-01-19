@@ -1,0 +1,151 @@
+2024-10-31 22:56:38.574 [background-preinit] [34mINFO [0;39m [35m[traceId=][0;39m o.h.validator.internal.util.Version.<clinit> - HV000001: Hibernate Validator 8.0.1.Final
+2024-10-31 22:56:38.662 [main] [34mINFO [0;39m [35m[traceId=][0;39m m.t.m.AdminModuleApplication.logStarting - Starting AdminModuleApplication using Java 17.0.6 with PID 9340 (C:\Users\minoa\IdeaProjects\my_service\admin_module\build\classes\java\main started by minoa in C:\Users\minoa\IdeaProjects\my_service)
+2024-10-31 22:56:38.664 [main] [39mDEBUG[0;39m [35m[traceId=][0;39m m.t.m.AdminModuleApplication.logStarting - Running with Spring Boot v3.1.5, Spring v6.0.13
+2024-10-31 22:56:38.666 [main] [34mINFO [0;39m [35m[traceId=][0;39m m.t.m.AdminModuleApplication.logStartupProfileInfo - The following 2 profiles are active: "core", "local"
+2024-10-31 22:56:40.668 [main] [34mINFO [0;39m [35m[traceId=][0;39m o.s.d.r.c.RepositoryConfigurationDelegate.multipleStoresDetected - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-10-31 22:56:40.677 [main] [34mINFO [0;39m [35m[traceId=][0;39m o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-10-31 22:56:41.063 [main] [34mINFO [0;39m [35m[traceId=][0;39m o.s.d.r.c.RepositoryConfigurationExtensionSupport.isStrictRepositoryCandidate - Spring Data JPA - Could not safely identify store assignment for repository candidate interface ms.toy.my_service.repository.TokenRepository; If you want this repository to be a JPA repository, consider annotating your entities with one of these annotations: jakarta.persistence.Entity, jakarta.persistence.MappedSuperclass (preferred), or consider extending one of the following types with your repository: org.springframework.data.jpa.repository.JpaRepository
+2024-10-31 22:56:41.114 [main] [34mINFO [0;39m [35m[traceId=][0;39m o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn - Finished Spring Data repository scanning in 422 ms. Found 5 JPA repository interfaces.
+2024-10-31 22:56:41.146 [main] [34mINFO [0;39m [35m[traceId=][0;39m o.s.d.r.c.RepositoryConfigurationDelegate.multipleStoresDetected - Multiple Spring Data modules found, entering strict repository configuration mode
+2024-10-31 22:56:41.149 [main] [34mINFO [0;39m [35m[traceId=][0;39m o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-10-31 22:56:41.178 [main] [34mINFO [0;39m [35m[traceId=][0;39m o.s.d.r.c.RepositoryConfigurationExtensionSupport.isStrictRepositoryCandidate - Spring Data Redis - Could not safely identify store assignment for repository candidate interface ms.toy.my_service.repository.AdminRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-10-31 22:56:41.179 [main] [34mINFO [0;39m [35m[traceId=][0;39m o.s.d.r.c.RepositoryConfigurationExtensionSupport.isStrictRepositoryCandidate - Spring Data Redis - Could not safely identify store assignment for repository candidate interface ms.toy.my_service.repository.AuthorityRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-10-31 22:56:41.180 [main] [34mINFO [0;39m [35m[traceId=][0;39m o.s.d.r.c.RepositoryConfigurationExtensionSupport.isStrictRepositoryCandidate - Spring Data Redis - Could not safely identify store assignment for repository candidate interface ms.toy.my_service.repository.ReservationRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-10-31 22:56:41.181 [main] [34mINFO [0;39m [35m[traceId=][0;39m o.s.d.r.c.RepositoryConfigurationExtensionSupport.isStrictRepositoryCandidate - Spring Data Redis - Could not safely identify store assignment for repository candidate interface ms.toy.my_service.repository.SpaceRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-10-31 22:56:41.182 [main] [34mINFO [0;39m [35m[traceId=][0;39m o.s.d.r.c.RepositoryConfigurationExtensionSupport.isStrictRepositoryCandidate - Spring Data Redis - Could not safely identify store assignment for repository candidate interface ms.toy.my_service.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2024-10-31 22:56:41.186 [main] [34mINFO [0;39m [35m[traceId=][0;39m o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn - Finished Spring Data repository scanning in 19 ms. Found 1 Redis repository interfaces.
+2024-10-31 22:56:43.034 [main] [34mINFO [0;39m [35m[traceId=][0;39m o.s.b.w.e.tomcat.TomcatWebServer.initialize - Tomcat initialized with port(s): 8080 (http)
+2024-10-31 22:56:43.052 [main] [34mINFO [0;39m [35m[traceId=][0;39m o.a.coyote.http11.Http11NioProtocol.log - Initializing ProtocolHandler ["http-nio-8080"]
+2024-10-31 22:56:43.057 [main] [34mINFO [0;39m [35m[traceId=][0;39m o.a.catalina.core.StandardService.log - Starting service [Tomcat]
+2024-10-31 22:56:43.057 [main] [34mINFO [0;39m [35m[traceId=][0;39m o.a.catalina.core.StandardEngine.log - Starting Servlet engine: [Apache Tomcat/10.1.15]
+2024-10-31 22:56:43.305 [main] [34mINFO [0;39m [35m[traceId=][0;39m o.a.c.c.C.[Tomcat].[localhost].[/].log - Initializing Spring embedded WebApplicationContext
+2024-10-31 22:56:43.306 [main] [34mINFO [0;39m [35m[traceId=][0;39m o.s.b.w.s.c.ServletWebServerApplicationContext.prepareWebApplicationContext - Root WebApplicationContext: initialization completed in 4564 ms
+2024-10-31 22:56:43.701 [main] [39mDEBUG[0;39m [35m[traceId=][0;39m m.t.my_service.filter.LoggingFilter.init - Filter 'loggingFilter' configured for use
+2024-10-31 22:56:44.121 [main] [34mINFO [0;39m [35m[traceId=][0;39m o.h.jpa.internal.util.LogHelper.logPersistenceUnitInformation - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-10-31 22:56:44.514 [main] [34mINFO [0;39m [35m[traceId=][0;39m org.hibernate.Version.logVersion - HHH000412: Hibernate ORM core version 6.2.13.Final
+2024-10-31 22:56:44.518 [main] [34mINFO [0;39m [35m[traceId=][0;39m org.hibernate.cfg.Environment.<clinit> - HHH000406: Using bytecode reflection optimizer
+2024-10-31 22:56:45.095 [main] [34mINFO [0;39m [35m[traceId=][0;39m o.s.o.j.p.SpringPersistenceUnitInfo.addTransformer - No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-10-31 22:56:45.156 [main] [34mINFO [0;39m [35m[traceId=][0;39m com.zaxxer.hikari.HikariDataSource.getConnection - HikariPool-1 - Starting...
+2024-10-31 22:56:45.507 [main] [34mINFO [0;39m [35m[traceId=][0;39m com.zaxxer.hikari.pool.HikariPool.checkFailFast - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@593354fa
+2024-10-31 22:56:45.512 [main] [34mINFO [0;39m [35m[traceId=][0;39m com.zaxxer.hikari.HikariDataSource.getConnection - HikariPool-1 - Start completed.
+2024-10-31 22:56:45.643 [main] [31mWARN [0;39m [35m[traceId=][0;39m org.hibernate.dialect.Dialect.checkVersion - HHH000511: The 5.5.0 version for [org.hibernate.dialect.MySQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 5.7.0. Check the community dialects project for available legacy versions.
+2024-10-31 22:56:47.688 [main] [34mINFO [0;39m [35m[traceId=][0;39m o.h.e.t.j.p.i.JtaPlatformInitiator.initiateService - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-10-31 22:56:47.805 [main] [34mINFO [0;39m [35m[traceId=][0;39m o.s.o.j.LocalContainerEntityManagerFactoryBean.buildNativeEntityManagerFactory - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-10-31 22:56:50.038 [main] [34mINFO [0;39m [35m[traceId=][0;39m o.s.d.j.r.query.QueryEnhancerFactory.<clinit> - Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-10-31 22:56:51.477 [main] [34mINFO [0;39m [35m[traceId=][0;39m org.redisson.Version.logVersion - Redisson 3.28.0
+2024-10-31 22:56:51.564 [main] [31mWARN [0;39m [35m[traceId=][0;39m o.r.c.SequentialDnsAddressResolverFactory.create - DNS TCP fallback on UDP query timeout disabled. Upgrade Netty to 4.1.105 or higher.
+2024-10-31 22:56:51.788 [redisson-netty-4-4] [34mINFO [0;39m [35m[traceId=][0;39m o.r.connection.ConnectionsHolder.lambda$initConnections$1 - 1 connections initialized for 172.30.1.14/172.30.1.14:6379
+2024-10-31 22:56:52.002 [redisson-netty-4-19] [34mINFO [0;39m [35m[traceId=][0;39m o.r.connection.ConnectionsHolder.lambda$initConnections$1 - 24 connections initialized for 172.30.1.14/172.30.1.14:6379
+2024-10-31 22:56:52.448 [main] [31mWARN [0;39m [35m[traceId=][0;39m o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration.openEntityManagerInViewInterceptor - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-10-31 22:56:53.294 [main] [34mINFO [0;39m [35m[traceId=][0;39m o.s.b.a.e.web.EndpointLinksResolver.<init> - Exposing 1 endpoint(s) beneath base path '/actuator'
+2024-10-31 22:56:53.392 [main] [34mINFO [0;39m [35m[traceId=][0;39m o.s.s.web.DefaultSecurityFilterChain.<init> - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@730632bb, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@1a2b0708, org.springframework.security.web.context.SecurityContextHolderFilter@1e0fd2ac, org.springframework.security.web.header.HeaderWriterFilter@213e10c9, org.springframework.security.web.authentication.logout.LogoutFilter@421d9b57, ms.toy.my_service.jwt.JwtFilter@5281a933, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@66949b48, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@668d9b0, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@58814dc1, org.springframework.security.web.session.SessionManagementFilter@a4664f3, org.springframework.security.web.access.ExceptionTranslationFilter@51fcee02, org.springframework.security.web.access.intercept.AuthorizationFilter@16dbc731]
+2024-10-31 22:56:54.608 [main] [34mINFO [0;39m [35m[traceId=][0;39m o.a.coyote.http11.Http11NioProtocol.log - Starting ProtocolHandler ["http-nio-8080"]
+2024-10-31 22:56:54.648 [main] [34mINFO [0;39m [35m[traceId=][0;39m o.s.b.w.e.tomcat.TomcatWebServer.start - Tomcat started on port(s): 8080 (http) with context path ''
+2024-10-31 22:56:54.681 [main] [34mINFO [0;39m [35m[traceId=][0;39m m.t.m.AdminModuleApplication.logStarted - Started AdminModuleApplication in 16.656 seconds (process running for 17.29)
+2024-10-31 23:04:08.867 [http-nio-8080-exec-2] [34mINFO [0;39m [35m[traceId=][0;39m o.a.c.c.C.[Tomcat].[localhost].[/].log - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-10-31 23:04:08.867 [http-nio-8080-exec-2] [34mINFO [0;39m [35m[traceId=][0;39m o.s.web.servlet.DispatcherServlet.initServletBean - Initializing Servlet 'dispatcherServlet'
+2024-10-31 23:04:08.869 [http-nio-8080-exec-2] [34mINFO [0;39m [35m[traceId=][0;39m o.s.web.servlet.DispatcherServlet.initServletBean - Completed initialization in 2 ms
+2024-10-31 23:04:08.909 [http-nio-8080-exec-2] [34mINFO [0;39m [35m[traceId=5bff8c8d-e52d-4f18-b48c-15ed5b06d8c3][0;39m m.t.my_service.filter.LoggingFilter.logRequest - Request: POST uri=[/api/v1/login] content-type=[application/json] client-ip=[0:0:0:0:0:0:0:1]
+2024-10-31 23:04:08.910 [http-nio-8080-exec-2] [34mINFO [0;39m [35m[traceId=5bff8c8d-e52d-4f18-b48c-15ed5b06d8c3][0;39m m.t.my_service.filter.LoggingFilter.logPayload - Request Payload: {
+    "userId":"test",
+    "password": "1234"
+}
+2024-10-31 23:04:09.660 [http-nio-8080-exec-2] [34mINFO [0;39m [35m[traceId=5bff8c8d-e52d-4f18-b48c-15ed5b06d8c3][0;39m m.t.my_service.filter.LoggingFilter.logPayload - Response Payload: {"result":true,"code":"200","message":"Success","data":{"accessToken":"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwibWVtYmVyU2VxIjoxLCJtZW1iZXJOYW1lIjoi7YWM7Iqk7Yq4IiwiYXV0aG9yaXRpZXMiOiJST0xFX0FETUlOIiwiZXhwIjoxNzMwMzg3MDQ5fQ.yAZ1jxws0O88HMCu-cMcUaHkIm8fHe_253asOtmPqDNiQCUXuQzljSCnobu4_zcGI9QFPHFDDndzU5djD5KmRA","refreshToken":"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwibWVtYmVyU2VxIjoxLCJtZW1iZXJOYW1lIjoi7YWM7Iqk7Yq4IiwiYXV0aG9yaXRpZXMiOiJST0xFX0FETUlOIiwiZXhwIjoxNzMwMzk0MjQ5fQ.etRPOMdzQgaBV3H30_glQG6uMLZ84hIGHBU4TNPZ2Xaenxem3F65e6PKF_Cw0ST3Kec8Tvw3aR2DEeFRg5LlWQ"}}
+2024-10-31 23:16:39.245 [http-nio-8080-exec-5] [34mINFO [0;39m [35m[traceId=][0;39m ms.toy.my_service.jwt.JwtFilter.doFilterInternal - valid accessToken
+2024-10-31 23:16:39.250 [http-nio-8080-exec-5] [34mINFO [0;39m [35m[traceId=1e32eeab-5bf4-4711-a16c-0f91b5cb3d40][0;39m m.t.my_service.filter.LoggingFilter.logRequest - Request: POST uri=[/api/v1/login] content-type=[application/json] client-ip=[0:0:0:0:0:0:0:1]
+2024-10-31 23:16:39.250 [http-nio-8080-exec-5] [34mINFO [0;39m [35m[traceId=1e32eeab-5bf4-4711-a16c-0f91b5cb3d40][0;39m m.t.my_service.filter.LoggingFilter.logPayload - Request Payload: {
+    "userId":"test",
+    "password": "1234"
+}
+2024-10-31 23:16:39.350 [http-nio-8080-exec-5] [34mINFO [0;39m [35m[traceId=1e32eeab-5bf4-4711-a16c-0f91b5cb3d40][0;39m m.t.my_service.filter.LoggingFilter.logPayload - Response Payload: {"result":true,"code":"200","message":"Success","data":{"accessToken":"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwibWVtYmVyU2VxIjoxLCJtZW1iZXJOYW1lIjoi7YWM7Iqk7Yq4IiwiYXV0aG9yaXRpZXMiOiJST0xFX0FETUlOIiwiZXhwIjoxNzMwMzg3Nzk5fQ.JJUtMHMn8nC06ALjash-t-5t-wFC-MFXBDFh8yoy1HB53nz4RAXyQnrv16b1BGnP_339qXTFPLUFSs6xW-KPjw","refreshToken":"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwibWVtYmVyU2VxIjoxLCJtZW1iZXJOYW1lIjoi7YWM7Iqk7Yq4IiwiYXV0aG9yaXRpZXMiOiJST0xFX0FETUlOIiwiZXhwIjoxNzMwMzk0OTk5fQ.M7l-nw5HtRjpOOI6gj_ByGeCYf4STQwVCzs-5TwF6_X7FtGSXBxnKB-AgNn8b3tAaPTQEMcOWwfeDJVx5fhZQQ"}}
+2024-10-31 23:16:40.618 [http-nio-8080-exec-6] [34mINFO [0;39m [35m[traceId=][0;39m ms.toy.my_service.jwt.JwtFilter.doFilterInternal - valid accessToken
+2024-10-31 23:16:40.619 [http-nio-8080-exec-6] [34mINFO [0;39m [35m[traceId=5acfe174-8c2f-49e9-876c-21a025113372][0;39m m.t.my_service.filter.LoggingFilter.logRequest - Request: POST uri=[/api/v1/login] content-type=[application/json] client-ip=[0:0:0:0:0:0:0:1]
+2024-10-31 23:16:40.620 [http-nio-8080-exec-6] [34mINFO [0;39m [35m[traceId=5acfe174-8c2f-49e9-876c-21a025113372][0;39m m.t.my_service.filter.LoggingFilter.logPayload - Request Payload: {
+    "userId":"test",
+    "password": "1234"
+}
+2024-10-31 23:16:40.709 [http-nio-8080-exec-6] [34mINFO [0;39m [35m[traceId=5acfe174-8c2f-49e9-876c-21a025113372][0;39m m.t.my_service.filter.LoggingFilter.logPayload - Response Payload: {"result":true,"code":"200","message":"Success","data":{"accessToken":"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwibWVtYmVyU2VxIjoxLCJtZW1iZXJOYW1lIjoi7YWM7Iqk7Yq4IiwiYXV0aG9yaXRpZXMiOiJST0xFX0FETUlOIiwiZXhwIjoxNzMwMzg3ODAwfQ.icRUuFtW4NZ9WffS8jOwAxLcWqXUGH1OTwlzbfukGrQYNZgIiXhJ-2A3KxVrTvEd-WBQpVvd9HHSx6aWrjPKFA","refreshToken":"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwibWVtYmVyU2VxIjoxLCJtZW1iZXJOYW1lIjoi7YWM7Iqk7Yq4IiwiYXV0aG9yaXRpZXMiOiJST0xFX0FETUlOIiwiZXhwIjoxNzMwMzk1MDAwfQ.Dy6tYFeifJHHIxLBUrCoQk2M7vaVBo1Hze3iXx2WK_tmWjEuqwkdnvbFGs3l3hgl47y1JODxuv-uxwlFGySNvQ"}}
+2024-10-31 23:16:41.638 [http-nio-8080-exec-7] [34mINFO [0;39m [35m[traceId=][0;39m ms.toy.my_service.jwt.JwtFilter.doFilterInternal - valid accessToken
+2024-10-31 23:16:41.640 [http-nio-8080-exec-7] [34mINFO [0;39m [35m[traceId=94e973d7-5041-440d-a046-402a81f5b95c][0;39m m.t.my_service.filter.LoggingFilter.logRequest - Request: POST uri=[/api/v1/login] content-type=[application/json] client-ip=[0:0:0:0:0:0:0:1]
+2024-10-31 23:16:41.640 [http-nio-8080-exec-7] [34mINFO [0;39m [35m[traceId=94e973d7-5041-440d-a046-402a81f5b95c][0;39m m.t.my_service.filter.LoggingFilter.logPayload - Request Payload: {
+    "userId":"test",
+    "password": "1234"
+}
+2024-10-31 23:16:41.744 [http-nio-8080-exec-7] [34mINFO [0;39m [35m[traceId=94e973d7-5041-440d-a046-402a81f5b95c][0;39m m.t.my_service.filter.LoggingFilter.logPayload - Response Payload: {"result":true,"code":"200","message":"Success","data":{"accessToken":"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwibWVtYmVyU2VxIjoxLCJtZW1iZXJOYW1lIjoi7YWM7Iqk7Yq4IiwiYXV0aG9yaXRpZXMiOiJST0xFX0FETUlOIiwiZXhwIjoxNzMwMzg3ODAxfQ.oZD3kh5xkZKqilO1k_8Y31wGq6b7jlKorftlgGFcZYouPMGqN3xHs_0MVUfgLxS4keWgcdJcBqJFwXH_k4T0Kw","refreshToken":"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwibWVtYmVyU2VxIjoxLCJtZW1iZXJOYW1lIjoi7YWM7Iqk7Yq4IiwiYXV0aG9yaXRpZXMiOiJST0xFX0FETUlOIiwiZXhwIjoxNzMwMzk1MDAxfQ.nqWEZMubWYMRXKrXN5AxfSlCYz5DZko_T-n5tKFciwa7cubwt3hWWXXDCXQm1Rr1pTZ_GDfW9gEH8eHlLd_nJQ"}}
+2024-10-31 23:16:42.624 [http-nio-8080-exec-8] [34mINFO [0;39m [35m[traceId=][0;39m ms.toy.my_service.jwt.JwtFilter.doFilterInternal - valid accessToken
+2024-10-31 23:16:42.627 [http-nio-8080-exec-8] [34mINFO [0;39m [35m[traceId=6a37ba08-adf4-42c9-a8ad-9ade2c6a0c2f][0;39m m.t.my_service.filter.LoggingFilter.logRequest - Request: POST uri=[/api/v1/login] content-type=[application/json] client-ip=[0:0:0:0:0:0:0:1]
+2024-10-31 23:16:42.627 [http-nio-8080-exec-8] [34mINFO [0;39m [35m[traceId=6a37ba08-adf4-42c9-a8ad-9ade2c6a0c2f][0;39m m.t.my_service.filter.LoggingFilter.logPayload - Request Payload: {
+    "userId":"test",
+    "password": "1234"
+}
+2024-10-31 23:16:42.729 [http-nio-8080-exec-8] [34mINFO [0;39m [35m[traceId=6a37ba08-adf4-42c9-a8ad-9ade2c6a0c2f][0;39m m.t.my_service.filter.LoggingFilter.logPayload - Response Payload: {"result":true,"code":"200","message":"Success","data":{"accessToken":"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwibWVtYmVyU2VxIjoxLCJtZW1iZXJOYW1lIjoi7YWM7Iqk7Yq4IiwiYXV0aG9yaXRpZXMiOiJST0xFX0FETUlOIiwiZXhwIjoxNzMwMzg3ODAyfQ.3B55GhqvutdWz_-t1-qQbPAikFN2wId0fQyCvsKUop2h8ROxvepk5H5zqgMk8hd3NfXcjvdpO-yqxtjsHTLypQ","refreshToken":"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwibWVtYmVyU2VxIjoxLCJtZW1iZXJOYW1lIjoi7YWM7Iqk7Yq4IiwiYXV0aG9yaXRpZXMiOiJST0xFX0FETUlOIiwiZXhwIjoxNzMwMzk1MDAyfQ.DbCgsVBirxS_Mnm3pX6ppi1A7NDsuDZE188m1X4P9ScR_RpcT5YejnqkFpkZaRwXXnHv40aS5LAa5TRQKc8nEg"}}
+2024-10-31 23:16:43.609 [http-nio-8080-exec-9] [34mINFO [0;39m [35m[traceId=][0;39m ms.toy.my_service.jwt.JwtFilter.doFilterInternal - valid accessToken
+2024-10-31 23:16:43.612 [http-nio-8080-exec-9] [34mINFO [0;39m [35m[traceId=673e8387-5373-4746-a09b-41a34767ca98][0;39m m.t.my_service.filter.LoggingFilter.logRequest - Request: POST uri=[/api/v1/login] content-type=[application/json] client-ip=[0:0:0:0:0:0:0:1]
+2024-10-31 23:16:43.612 [http-nio-8080-exec-9] [34mINFO [0;39m [35m[traceId=673e8387-5373-4746-a09b-41a34767ca98][0;39m m.t.my_service.filter.LoggingFilter.logPayload - Request Payload: {
+    "userId":"test",
+    "password": "1234"
+}
+2024-10-31 23:16:43.704 [http-nio-8080-exec-9] [34mINFO [0;39m [35m[traceId=673e8387-5373-4746-a09b-41a34767ca98][0;39m m.t.my_service.filter.LoggingFilter.logPayload - Response Payload: {"result":true,"code":"200","message":"Success","data":{"accessToken":"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwibWVtYmVyU2VxIjoxLCJtZW1iZXJOYW1lIjoi7YWM7Iqk7Yq4IiwiYXV0aG9yaXRpZXMiOiJST0xFX0FETUlOIiwiZXhwIjoxNzMwMzg3ODAzfQ.BaGnwW_Eg60LaSzFqVCFEICvwhViTX6p7Ysjo6QwhWoA-2B1d1m66O0chT9EZ8L1FBpBrigRO3W9CwPTrDJA0A","refreshToken":"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwibWVtYmVyU2VxIjoxLCJtZW1iZXJOYW1lIjoi7YWM7Iqk7Yq4IiwiYXV0aG9yaXRpZXMiOiJST0xFX0FETUlOIiwiZXhwIjoxNzMwMzk1MDAzfQ.aJZMwftXmjx9zS6PDpcxoeHUF1VMI8Q-duEe8IT249dtvlm3zGylT4Q-jQzm9ySRPMGkeSd0z__pQK7rIuKvMA"}}
+2024-10-31 23:16:44.719 [http-nio-8080-exec-10] [34mINFO [0;39m [35m[traceId=][0;39m ms.toy.my_service.jwt.JwtFilter.doFilterInternal - valid accessToken
+2024-10-31 23:16:44.721 [http-nio-8080-exec-10] [34mINFO [0;39m [35m[traceId=93b40836-c89e-4008-af67-1d67f526648e][0;39m m.t.my_service.filter.LoggingFilter.logRequest - Request: POST uri=[/api/v1/login] content-type=[application/json] client-ip=[0:0:0:0:0:0:0:1]
+2024-10-31 23:16:44.722 [http-nio-8080-exec-10] [34mINFO [0;39m [35m[traceId=93b40836-c89e-4008-af67-1d67f526648e][0;39m m.t.my_service.filter.LoggingFilter.logPayload - Request Payload: {
+    "userId":"test",
+    "password": "1234"
+}
+2024-10-31 23:16:44.828 [http-nio-8080-exec-10] [34mINFO [0;39m [35m[traceId=93b40836-c89e-4008-af67-1d67f526648e][0;39m m.t.my_service.filter.LoggingFilter.logPayload - Response Payload: {"result":true,"code":"200","message":"Success","data":{"accessToken":"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwibWVtYmVyU2VxIjoxLCJtZW1iZXJOYW1lIjoi7YWM7Iqk7Yq4IiwiYXV0aG9yaXRpZXMiOiJST0xFX0FETUlOIiwiZXhwIjoxNzMwMzg3ODA0fQ.3xWtZJOx2S9cjUdj7fnB-YSHamtLQ1AlBQWJ2oYRBUBhDAjqjSKoCpcRXPftTS-Ilm0EqMIBR9GA0OxIKSlgBw","refreshToken":"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwibWVtYmVyU2VxIjoxLCJtZW1iZXJOYW1lIjoi7YWM7Iqk7Yq4IiwiYXV0aG9yaXRpZXMiOiJST0xFX0FETUlOIiwiZXhwIjoxNzMwMzk1MDA0fQ.OROydB7A3seU4P4KZemhBTghmsreEx_8HhZZBo98OBOSzuzZ1FG_qt7bIFZ2o5osGZZ74IxBHJxRpnxw5Ku-Uw"}}
+2024-10-31 23:16:53.240 [http-nio-8080-exec-1] [34mINFO [0;39m [35m[traceId=][0;39m ms.toy.my_service.jwt.JwtFilter.doFilterInternal - valid accessToken
+2024-10-31 23:16:53.244 [http-nio-8080-exec-1] [34mINFO [0;39m [35m[traceId=58c403e3-1ec4-404b-adce-6b06e8a45e43][0;39m m.t.my_service.filter.LoggingFilter.logRequest - Request: POST uri=[/api/v1/login] content-type=[application/json] client-ip=[0:0:0:0:0:0:0:1]
+2024-10-31 23:16:53.244 [http-nio-8080-exec-1] [34mINFO [0;39m [35m[traceId=58c403e3-1ec4-404b-adce-6b06e8a45e43][0;39m m.t.my_service.filter.LoggingFilter.logPayload - Request Payload: {
+    "userId":"test",
+    "password": "12"
+}
+2024-10-31 23:16:53.397 [http-nio-8080-exec-1] [34mINFO [0;39m [35m[traceId=58c403e3-1ec4-404b-adce-6b06e8a45e43][0;39m m.t.my_service.filter.LoggingFilter.logPayload - Response Payload: {"result":false,"code":"1000","message":"ID ?òπ?? ÎπÑÎ?Î≤àÌò∏Í∞? ?ùºÏπòÌïòÏß? ?ïä?äµ?ãà?ã§. ?ûÖ?†•?ïú ?Ç¥?ö©?ùÑ ?ã§?ãú ?ôï?ù∏?ï¥ Ï£ºÏÑ∏?öî."}
+2024-10-31 23:17:05.668 [http-nio-8080-exec-2] [34mINFO [0;39m [35m[traceId=][0;39m ms.toy.my_service.jwt.JwtFilter.doFilterInternal - valid accessToken
+2024-10-31 23:17:05.673 [http-nio-8080-exec-2] [34mINFO [0;39m [35m[traceId=21ed263a-b954-4f45-980e-3ff0513ddb9e][0;39m m.t.my_service.filter.LoggingFilter.logRequest - Request: POST uri=[/api/v1/login] content-type=[application/json] client-ip=[0:0:0:0:0:0:0:1]
+2024-10-31 23:17:05.674 [http-nio-8080-exec-2] [34mINFO [0;39m [35m[traceId=21ed263a-b954-4f45-980e-3ff0513ddb9e][0;39m m.t.my_service.filter.LoggingFilter.logPayload - Request Payload: {
+    "userId":"test2",
+    "password": "1234"
+}
+2024-10-31 23:17:05.781 [http-nio-8080-exec-2] [34mINFO [0;39m [35m[traceId=21ed263a-b954-4f45-980e-3ff0513ddb9e][0;39m m.t.my_service.filter.LoggingFilter.logPayload - Response Payload: {"result":true,"code":"200","message":"Success","data":{"accessToken":"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0MiIsIm1lbWJlclNlcSI6MywibWVtYmVyTmFtZSI6InRlc3QyIiwiYXV0aG9yaXRpZXMiOiJST0xFX0FETUlOIiwiZXhwIjoxNzMwMzg3ODI1fQ.XM1gcI8x5BhHgwRDzvhxi7KZ5Wkhc12RMvd2TtS7jxEnApSAvq4G4WIK2RrtFnFK9NuWKr_v843f3V0zDqsD8w","refreshToken":"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0MiIsIm1lbWJlclNlcSI6MywibWVtYmVyTmFtZSI6InRlc3QyIiwiYXV0aG9yaXRpZXMiOiJST0xFX0FETUlOIiwiZXhwIjoxNzMwMzk1MDI1fQ.uO6gvFCDEWxAhaNTCajIeB8nb2QSFtHlFwmv4maT7jkclxgNj98gp1t9Xv8Kd8Q0Rui7qtMUSvd7cskTqu3Agw"}}
+2024-10-31 23:17:46.682 [http-nio-8080-exec-4] [34mINFO [0;39m [35m[traceId=][0;39m ms.toy.my_service.jwt.JwtFilter.doFilterInternal - valid accessToken
+2024-10-31 23:17:46.685 [http-nio-8080-exec-4] [34mINFO [0;39m [35m[traceId=644c816e-9160-4bee-8252-a185b754e0ed][0;39m m.t.my_service.filter.LoggingFilter.logRequest - Request: POST uri=[/api/v1/login] content-type=[application/json] client-ip=[0:0:0:0:0:0:0:1]
+2024-10-31 23:17:46.686 [http-nio-8080-exec-4] [34mINFO [0;39m [35m[traceId=644c816e-9160-4bee-8252-a185b754e0ed][0;39m m.t.my_service.filter.LoggingFilter.logPayload - Request Payload: {
+    "userId":"test2",
+    "password": "1234"
+}
+2024-10-31 23:17:46.788 [http-nio-8080-exec-4] [34mINFO [0;39m [35m[traceId=644c816e-9160-4bee-8252-a185b754e0ed][0;39m m.t.my_service.filter.LoggingFilter.logPayload - Response Payload: {"result":true,"code":"200","message":"Success","data":{"accessToken":"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0MiIsIm1lbWJlclNlcSI6MywibWVtYmVyTmFtZSI6InRlc3QyIiwiYXV0aG9yaXRpZXMiOiJST0xFX0FETUlOIiwiZXhwIjoxNzMwMzg3ODY2fQ.O7tFZ-2a_cqDCeRho7THvXv-oMNd50rZ3u4IrsNDWPPwznlGr9Dxmu0GckwHXKWwXakhYOVKekMXO5Ivt_LnGA","refreshToken":"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0MiIsIm1lbWJlclNlcSI6MywibWVtYmVyTmFtZSI6InRlc3QyIiwiYXV0aG9yaXRpZXMiOiJST0xFX0FETUlOIiwiZXhwIjoxNzMwMzk1MDY2fQ.qhb_c088EBn9MbI-7Z3nxVWD-TQbCs7yHNC-mwjxsCpfiDO6sAWsy1BSid558FepTqhpbVSNTwlyiM1bVdv5eg"}}
+2024-10-31 23:17:49.703 [http-nio-8080-exec-3] [34mINFO [0;39m [35m[traceId=][0;39m ms.toy.my_service.jwt.JwtFilter.doFilterInternal - valid accessToken
+2024-10-31 23:17:49.706 [http-nio-8080-exec-3] [34mINFO [0;39m [35m[traceId=123feba5-0dd0-4163-b21b-c01712859f20][0;39m m.t.my_service.filter.LoggingFilter.logRequest - Request: POST uri=[/api/v1/admin/join] content-type=[application/json] client-ip=[0:0:0:0:0:0:0:1]
+2024-10-31 23:17:49.707 [http-nio-8080-exec-3] [34mINFO [0;39m [35m[traceId=123feba5-0dd0-4163-b21b-c01712859f20][0;39m m.t.my_service.filter.LoggingFilter.logPayload - Request Payload: {
+    "userId":"test",
+    "userName":"test",
+    "phoneNumber":"010-1212-1212",
+    "password": "1234"
+}
+2024-10-31 23:17:49.739 [http-nio-8080-exec-3] [34mINFO [0;39m [35m[traceId=123feba5-0dd0-4163-b21b-c01712859f20][0;39m m.t.my_service.filter.LoggingFilter.logPayload - Response Payload: {"result":false,"code":"1003","message":"?ù¥ÎØ? ?ì±Î°ùÎêú ID?ûÖ?ãà?ã§."}
+2024-10-31 23:18:10.283 [http-nio-8080-exec-5] [34mINFO [0;39m [35m[traceId=][0;39m ms.toy.my_service.jwt.JwtFilter.doFilterInternal - valid accessToken
+2024-10-31 23:18:10.291 [http-nio-8080-exec-5] [34mINFO [0;39m [35m[traceId=cca7f577-9c30-4824-82b4-6373b7f2d174][0;39m m.t.my_service.filter.LoggingFilter.logRequest - Request: POST uri=[/api/v1/member/join] content-type=[application/json] client-ip=[0:0:0:0:0:0:0:1]
+2024-10-31 23:18:10.291 [http-nio-8080-exec-5] [34mINFO [0;39m [35m[traceId=cca7f577-9c30-4824-82b4-6373b7f2d174][0;39m m.t.my_service.filter.LoggingFilter.logPayload - Request Payload: {
+    "userId":"test",
+    "userName":"test",
+    "phoneNumber":"010-1212-1212",
+    "password": "1234"
+}
+2024-10-31 23:18:17.200 [http-nio-8080-exec-6] [34mINFO [0;39m [35m[traceId=][0;39m ms.toy.my_service.jwt.JwtFilter.doFilterInternal - valid accessToken
+2024-10-31 23:18:17.203 [http-nio-8080-exec-6] [34mINFO [0;39m [35m[traceId=9f1a964c-d708-4c6e-903f-ced7ec59f84f][0;39m m.t.my_service.filter.LoggingFilter.logRequest - Request: POST uri=[/api/v1/admin/join] content-type=[application/json] client-ip=[0:0:0:0:0:0:0:1]
+2024-10-31 23:18:17.203 [http-nio-8080-exec-6] [34mINFO [0;39m [35m[traceId=9f1a964c-d708-4c6e-903f-ced7ec59f84f][0;39m m.t.my_service.filter.LoggingFilter.logPayload - Request Payload: {
+    "userId":"test",
+    "userName":"test",
+    "phoneNumber":"010-1212-1212",
+    "password": "1234"
+}
+2024-10-31 23:18:17.218 [http-nio-8080-exec-6] [34mINFO [0;39m [35m[traceId=9f1a964c-d708-4c6e-903f-ced7ec59f84f][0;39m m.t.my_service.filter.LoggingFilter.logPayload - Response Payload: {"result":false,"code":"1003","message":"?ù¥ÎØ? ?ì±Î°ùÎêú ID?ûÖ?ãà?ã§."}
+2024-10-31 23:18:20.761 [http-nio-8080-exec-7] [34mINFO [0;39m [35m[traceId=][0;39m ms.toy.my_service.jwt.JwtFilter.doFilterInternal - valid accessToken
+2024-10-31 23:18:20.762 [http-nio-8080-exec-7] [34mINFO [0;39m [35m[traceId=296a0f93-5399-44e5-9318-4ade8d4d8674][0;39m m.t.my_service.filter.LoggingFilter.logRequest - Request: POST uri=[/api/v1/admin/join] content-type=[application/json] client-ip=[0:0:0:0:0:0:0:1]
+2024-10-31 23:18:20.763 [http-nio-8080-exec-7] [34mINFO [0;39m [35m[traceId=296a0f93-5399-44e5-9318-4ade8d4d8674][0;39m m.t.my_service.filter.LoggingFilter.logPayload - Request Payload: {
+    "userId":"test123",
+    "userName":"test",
+    "phoneNumber":"010-1212-1212",
+    "password": "1234"
+}
+2024-10-31 23:18:20.884 [http-nio-8080-exec-7] [34mINFO [0;39m [35m[traceId=296a0f93-5399-44e5-9318-4ade8d4d8674][0;39m m.t.my_service.filter.LoggingFilter.logPayload - Response Payload: {"result":true,"code":"200","message":"Success","data":{"id":8}}
